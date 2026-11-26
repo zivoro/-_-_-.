@@ -1,0 +1,3322 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>التعليم في النظريات الاقتصادية — عرض تقديمي تفاعلي للقاعات الكبرى</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-papyrus: #F3E9D2;
+      --bg-papyrus-deep: #EAE0C5;
+      --card-cream: #FAF5E8;
+      --forest-green: #1A3A22;
+      --ink-brown: #3B220B;
+      --ink-muted: #5C4024;
+      --emerald: #2E6B3E;
+      --emerald-light: #3D8A52;
+      --gold: #B88B4A;
+      --gold-light: #D5AF72;
+      --gold-soft: rgba(184, 139, 74, 0.16);
+      --example-bg: #E5EFE0;
+      --shadow-editorial: 0 12px 34px rgba(59, 34, 11, 0.09);
+      --shadow-card: 0 4px 16px rgba(26, 58, 34, 0.08);
+      --font-display: 'Amiri', Georgia, serif;
+      --font-body: 'Cairo', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Hall Contrast Mode (High-Contrast for Bright Projectors) */
+    body.hall-contrast {
+      --bg-papyrus: #EFE3C6;
+      --card-cream: #FFFDF7;
+      --forest-green: #0E2614;
+      --ink-brown: #1B0E03;
+      --ink-muted: #3A2511;
+      --emerald: #1E542D;
+      --gold: #9A6F2E;
+      --example-bg: #D9EAD1;
+      --shadow-card: 0 6px 20px rgba(14, 38, 20, 0.16);
+    }
+    body.hall-contrast .ed-card,
+    body.hall-contrast .stair-card,
+    body.hall-contrast .visual-panel,
+    body.hall-contrast .media-teaser {
+      border-width: 2px;
+      border-color: rgba(154, 111, 46, 0.85);
+    }
+    body.hall-contrast .manuscript-frame {
+      background: #F6ECD4;
+      border-width: 2.5px;
+      border-color: #9A6F2E;
+    }
+
+    /* Pause background animations while viewing fullscreen media */
+    body.media-open .gear-cw,
+    body.media-open .gear-ccw,
+    body.media-open .gear-jammed,
+    body.media-open .orbit-dash,
+    body.media-open .flow-arrow {
+      animation-play-state: paused !important;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-papyrus);
+      color: var(--ink-brown);
+      font-family: var(--font-body);
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Subtle Papyrus Grain */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 12% 14%, rgba(250, 245, 232, 0.72) 0%, transparent 45%),
+        radial-gradient(circle at 88% 86%, rgba(184, 139, 74, 0.13) 0%, transparent 50%),
+        repeating-linear-gradient(0deg, rgba(59, 34, 11, 0.014) 0px, rgba(59, 34, 11, 0.014) 1px, transparent 1px, transparent 4px);
+    }
+
+    /* Top Progress Line */
+    .top-progress-track {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 5px;
+      background: rgba(184, 139, 74, 0.24);
+      z-index: 100;
+    }
+    .top-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--emerald));
+      transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      border-radius: 3px 0 0 3px;
+    }
+
+    /* Top Control Bar */
+    .top-bar {
+      position: fixed;
+      top: 7px;
+      right: 1.5vw;
+      left: 1.5vw;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      z-index: 90;
+      pointer-events: none;
+    }
+    .top-bar > * { pointer-events: auto; }
+
+    .section-pills {
+      display: flex;
+      gap: 4px;
+      background: rgba(250, 245, 232, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 3px 5px;
+      border-radius: 999px;
+      border: 1px solid rgba(184, 139, 74, 0.42);
+      box-shadow: 0 2px 10px rgba(59, 34, 11, 0.06);
+    }
+    .sec-pill {
+      border: none;
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--ink-muted);
+      padding: 4px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+    .sec-pill:hover { color: var(--forest-green); background: rgba(184, 139, 74, 0.14); }
+    .sec-pill.active {
+      background: var(--forest-green);
+      color: var(--card-cream);
+      box-shadow: 0 2px 8px rgba(26, 58, 34, 0.25);
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+    }
+    .tool-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      height: 34px;
+      padding: 0 11px;
+      border-radius: 999px;
+      border: 1.3px solid rgba(184, 139, 74, 0.5);
+      background: rgba(250, 245, 232, 0.94);
+      color: var(--forest-green);
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 8px rgba(59, 34, 11, 0.06);
+      white-space: nowrap;
+    }
+    .tool-btn:hover, .tool-btn.active {
+      background: var(--emerald);
+      color: #fff;
+      border-color: var(--emerald);
+      transform: translateY(-1px);
+    }
+    .tool-btn.gold-pill {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, rgba(184, 139, 74, 0.18), rgba(250, 245, 232, 0.96));
+    }
+    .tool-btn.gold-pill:hover, .tool-btn.gold-pill.active {
+      background: var(--gold);
+      color: #fff;
+      border-color: var(--gold);
+    }
+
+    /* Expanded Full-Hall Stage Wrapper */
+    .deck-viewport {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 1.5vw 46px;
+      z-index: 10;
+    }
+
+    /* Expanded Papyrus Manuscript Frame */
+    .manuscript-frame {
+      position: relative;
+      width: 97vw;
+      max-width: 1680px;
+      height: calc(100vh - 96px);
+      max-height: none;
+      background: linear-gradient(160deg, rgba(250, 245, 232, 0.62) 0%, rgba(243, 233, 210, 0.94) 100%);
+      border: 2px solid rgba(184, 139, 74, 0.62);
+      border-radius: 18px;
+      box-shadow: var(--shadow-editorial), inset 0 0 0 5px var(--bg-papyrus), inset 0 0 0 6.5px rgba(184, 139, 74, 0.34);
+      overflow: hidden;
+    }
+
+    /* Ornamental SVG Corners */
+    .corner-ornament {
+      position: absolute;
+      width: 52px;
+      height: 52px;
+      pointer-events: none;
+      z-index: 25;
+      color: var(--gold);
+      opacity: 0.8;
+    }
+    .corner-tr { top: 6px; right: 6px; }
+    .corner-tl { top: 6px; left: 6px; transform: scaleX(-1); }
+    .corner-br { bottom: 6px; right: 6px; transform: scaleY(-1); }
+    .corner-bl { bottom: 6px; left: 6px; transform: scale(-1, -1); }
+
+    /* Slides */
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 22px 38px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-36px) scale(0.985);
+      transition: opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+                  visibility 0.48s;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold) transparent;
+    }
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0) scale(1);
+      z-index: 15;
+    }
+    .slide.exit-prev {
+      transform: translateX(36px) scale(0.985);
+    }
+
+    /* Staggered Entrance */
+    .slide .anim {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1), transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .slide.active .anim {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .slide.active .d1 { transition-delay: 0.06s; }
+    .slide.active .d2 { transition-delay: 0.14s; }
+    .slide.active .d3 { transition-delay: 0.22s; }
+    .slide.active .d4 { transition-delay: 0.30s; }
+    .slide.active .d5 { transition-delay: 0.38s; }
+
+    /* Slide Header — Enlarged Hall Typography */
+    .slide-header {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      border-bottom: 1.8px solid rgba(184, 139, 74, 0.36);
+      padding-bottom: 8px;
+      flex-shrink: 0;
+    }
+    .slide-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--emerald);
+    }
+    .slide-num-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold);
+      color: #fff;
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 2px 11px;
+      border-radius: 999px;
+    }
+    .slide-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(32px, 3.3vw, 46px);
+      line-height: 1.18;
+      color: var(--forest-green);
+    }
+    .slide-subtitle {
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: clamp(17px, 1.5vw, 21px);
+      color: var(--ink-muted);
+      line-height: 1.42;
+    }
+
+    /* Editorial Cards — Large-Hall Comfort */
+    .ed-card {
+      background: var(--card-cream);
+      border: 1.4px solid rgba(184, 139, 74, 0.42);
+      border-radius: 14px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease, opacity 0.32s ease, filter 0.32s ease;
+      position: relative;
+    }
+    .ed-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(26, 58, 34, 0.12);
+      border-color: var(--emerald);
+    }
+    .ed-card-head {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 6px;
+    }
+    .num-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--emerald), var(--forest-green));
+      color: #fff;
+      font-weight: 800;
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(46, 107, 62, 0.3);
+    }
+    .num-badge.gold {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    }
+    .ed-card-title {
+      font-size: clamp(18px, 1.45vw, 21px);
+      font-weight: 800;
+      color: var(--forest-green);
+      line-height: 1.3;
+    }
+    .ed-card-text {
+      font-size: clamp(16.5px, 1.3vw, 19.5px);
+      font-weight: 600;
+      color: var(--ink-brown);
+      line-height: 1.65;
+    }
+
+    /* Progressive Focus Mode States */
+    body.focus-mode .focusable-card.focus-hidden {
+      opacity: 0.13 !important;
+      filter: blur(1.4px);
+      transform: translateY(8px) scale(0.985);
+    }
+    body.focus-mode .focusable-card.focus-past {
+      opacity: 0.58 !important;
+      filter: none;
+    }
+    body.focus-mode .focusable-card.focus-current {
+      opacity: 1 !important;
+      filter: none;
+      border: 2.5px solid var(--emerald) !important;
+      box-shadow: 0 10px 28px rgba(46, 107, 62, 0.24), 0 0 0 3px rgba(46, 107, 62, 0.16) !important;
+      transform: translateY(-2px) scale(1.012);
+      z-index: 5;
+    }
+
+    /* Example Box (#E5EFE0) */
+    .example-box {
+      background: var(--example-bg);
+      border: 1.4px solid rgba(46, 107, 62, 0.35);
+      border-right: 6px solid var(--emerald);
+      border-radius: 12px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      box-shadow: 0 3px 12px rgba(46, 107, 62, 0.08);
+      flex-shrink: 0;
+    }
+    .example-tag {
+      background: var(--emerald);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 999px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+    .example-text {
+      font-size: clamp(16.5px, 1.3vw, 19.5px);
+      font-weight: 700;
+      color: var(--forest-green);
+      line-height: 1.6;
+    }
+    .example-text strong { color: var(--ink-brown); }
+
+    /* Media Teaser / Preview Banner */
+    .media-teaser {
+      background: linear-gradient(135deg, rgba(184, 139, 74, 0.18) 0%, rgba(250, 245, 232, 0.96) 65%);
+      border: 1.8px solid var(--gold);
+      border-radius: 14px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      box-shadow: 0 4px 16px rgba(184, 139, 74, 0.14);
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+    .media-teaser-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 240px;
+      flex: 1;
+    }
+    .media-play-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), #956B30);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(184, 139, 74, 0.35);
+    }
+    .media-teaser-kicker {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: 0.2px;
+    }
+    .media-teaser-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--forest-green);
+      line-height: 1.3;
+    }
+    .media-teaser-sub {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink-muted);
+    }
+    .media-teaser-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .media-launch-btn {
+      border: none;
+      background: linear-gradient(135deg, var(--emerald), var(--forest-green));
+      color: #fff;
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 14px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: 0 4px 14px rgba(26, 58, 34, 0.26);
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+    .media-launch-btn:hover {
+      background: linear-gradient(135deg, var(--gold), #956B30);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(184, 139, 74, 0.35);
+    }
+    .media-launch-btn.secondary {
+      background: var(--card-cream);
+      color: var(--forest-green);
+      border: 1.6px solid var(--gold);
+      box-shadow: none;
+    }
+    .media-launch-btn.secondary:hover {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    /* Visual Panel — Expanded for Large Halls */
+    .visual-panel {
+      background: rgba(250, 245, 232, 0.9);
+      border: 1.8px dashed rgba(184, 139, 74, 0.56);
+      border-radius: 16px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 0;
+    }
+    .visual-panel svg {
+      width: 100%;
+      height: auto;
+      max-height: 335px;
+    }
+
+    /* Layout Grids */
+    .split-2 {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 20px;
+      align-items: stretch;
+      flex: 1;
+      min-height: 0;
+    }
+    .split-2.reverse {
+      grid-template-columns: 0.95fr 1.05fr;
+    }
+    .cards-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      justify-content: center;
+    }
+    .cards-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-content: center;
+    }
+    .cards-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    /* Interactive Buttons & Sliders */
+    .int-btn {
+      border: 1.6px solid var(--emerald);
+      background: var(--card-cream);
+      color: var(--forest-green);
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 14.5px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .int-btn:hover, .int-btn.active {
+      background: var(--emerald);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(46, 107, 62, 0.28);
+    }
+    .int-btn.gold-btn {
+      border-color: var(--gold);
+      color: var(--ink-brown);
+    }
+    .int-btn.gold-btn:hover, .int-btn.gold-btn.active {
+      background: var(--gold);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(184, 139, 74, 0.35);
+    }
+
+    input[type="range"].papyrus-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(184, 139, 74, 0.38);
+      outline: none;
+    }
+    input[type="range"].papyrus-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--emerald);
+      border: 2.5px solid var(--card-cream);
+      box-shadow: 0 2px 8px rgba(26, 58, 34, 0.35);
+      cursor: pointer;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 6px;
+      right: 1.5vw;
+      left: 1.5vw;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 90;
+      pointer-events: none;
+    }
+    .bottom-nav > * { pointer-events: auto; }
+
+    .nav-cluster {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(250, 245, 232, 0.94);
+      backdrop-filter: blur(8px);
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1.2px solid rgba(184, 139, 74, 0.48);
+      box-shadow: 0 4px 16px rgba(59, 34, 11, 0.08);
+    }
+    .nav-arrow {
+      border: none;
+      background: var(--forest-green);
+      color: var(--card-cream);
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 15px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s ease;
+    }
+    .nav-arrow:hover:not(:disabled) { background: var(--emerald); transform: translateY(-1px); }
+    .nav-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
+    .slide-counter {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 19px;
+      color: var(--forest-green);
+      min-width: 72px;
+      text-align: center;
+    }
+    .kbd-hint {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      background: rgba(250, 245, 232, 0.9);
+      padding: 4px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(184, 139, 74, 0.34);
+    }
+
+    /* Speaker Notes Drawer (Zero Timers) */
+    .notes-drawer {
+      position: fixed;
+      bottom: 52px;
+      left: 50%;
+      transform: translateX(-50%) translateY(140%);
+      width: min(1040px, calc(100% - 40px));
+      background: rgba(26, 58, 34, 0.97);
+      color: var(--card-cream);
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 18px 24px;
+      z-index: 120;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+      transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .notes-drawer.open { transform: translateX(-50%) translateY(0); }
+    .notes-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      color: var(--gold-light);
+      font-weight: 800;
+      font-size: 14.5px;
+    }
+    .notes-body {
+      font-size: 17.5px;
+      line-height: 1.75;
+      font-weight: 600;
+      color: #FAF5E8;
+    }
+
+    /* Modals: Overview, Media Catalog, Fullscreen Media Player */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 42, 26, 0.88);
+      backdrop-filter: blur(10px);
+      z-index: 160;
+      display: flex;
+      flex-direction: column;
+      padding: 26px 36px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .modal-overlay.open { opacity: 1; visibility: visible; }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--card-cream);
+      margin-bottom: 16px;
+      gap: 14px;
+    }
+    .modal-header h2 { font-family: var(--font-display); font-size: 32px; color: var(--card-cream); }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 14px;
+      overflow-y: auto;
+      padding: 4px;
+    }
+    .ov-item {
+      background: var(--bg-papyrus);
+      border: 2px solid rgba(184, 139, 74, 0.55);
+      border-radius: 12px;
+      padding: 13px 16px;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      text-align: right;
+    }
+    .ov-item:hover, .ov-item.current {
+      background: var(--card-cream);
+      border-color: var(--gold);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+    }
+    .ov-item.current { border-color: var(--emerald); box-shadow: 0 0 0 3px var(--gold-light); }
+    .ov-num { font-size: 13px; font-weight: 800; color: var(--emerald); margin-bottom: 4px; }
+    .ov-title { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: var(--forest-green); line-height: 1.3; }
+
+    /* Fullscreen Media Showcase Box */
+    .media-stage-card {
+      flex: 1;
+      min-height: 0;
+      background: var(--bg-papyrus);
+      border: 3px solid var(--gold);
+      border-radius: 20px;
+      padding: 20px 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+    .media-stage-body {
+      flex: 1;
+      width: 100%;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .media-stage-body video {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 14px;
+      border: 2px solid var(--forest-green);
+      background: #000;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+    .media-stage-body img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 14px;
+      border: 2.5px solid var(--gold);
+      background: #fff;
+      box-shadow: 0 10px 28px rgba(59, 34, 11, 0.18);
+    }
+    .media-stage-caption {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--forest-green);
+      text-align: center;
+      background: var(--example-bg);
+      padding: 10px 20px;
+      border-radius: 12px;
+      border-right: 5px solid var(--emerald);
+      width: 100%;
+    }
+
+    /* Media Catalog Grid */
+    .catalog-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .catalog-card {
+      background: var(--card-cream);
+      border: 2px solid rgba(184, 139, 74, 0.55);
+      border-radius: 14px;
+      padding: 15px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      text-align: right;
+    }
+
+    /* =============================================
+       SLIDE-SPECIFIC ENHANCED STYLES
+       ============================================= */
+    .cover-hero {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .cover-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(48px, 5.5vw, 76px);
+      line-height: 1.14;
+      color: var(--forest-green);
+      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.7);
+    }
+    .cover-emblem {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(46, 107, 62, 0.12);
+      border: 1.5px solid rgba(46, 107, 62, 0.4);
+      color: var(--emerald);
+      padding: 5px 20px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+    }
+    .gold-divider {
+      width: 220px;
+      height: 3.5px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2px auto;
+    }
+
+    /* Grand Cover & Grand Thank-You Slides */
+    .grand-center-slide {
+      justify-content: center !important;
+      align-items: center;
+      text-align: center;
+      gap: 22px !important;
+    }
+    .grand-medallion {
+      background: linear-gradient(155deg, rgba(250, 245, 232, 0.96), rgba(243, 233, 210, 0.85));
+      border: 2.5px solid var(--gold);
+      box-shadow: 0 16px 46px rgba(59, 34, 11, 0.12), inset 0 0 0 7px var(--bg-papyrus), inset 0 0 0 8.5px rgba(184, 139, 74, 0.4);
+      border-radius: 26px;
+      padding: clamp(34px, 4.5vh, 58px) clamp(32px, 5vw, 84px);
+      max-width: 1080px;
+      width: 92%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+    .supervisor-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--forest-green), var(--emerald));
+      color: var(--card-cream);
+      border: 2px solid var(--gold);
+      padding: 12px 34px;
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(24px, 2.4vw, 34px);
+      box-shadow: 0 8px 24px rgba(26, 58, 34, 0.22);
+      margin-top: 6px;
+    }
+    .supervisor-badge span.sup-label {
+      color: var(--gold-light);
+      font-family: var(--font-body);
+      font-size: clamp(16px, 1.4vw, 20px);
+      font-weight: 800;
+    }
+    .thanks-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(56px, 6.8vw, 94px);
+      color: var(--forest-green);
+      line-height: 1.2;
+      text-shadow: 0 3px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .mindmap-node { cursor: pointer; transition: all 0.25s ease; }
+    .mindmap-node:hover { filter: drop-shadow(0 5px 10px rgba(46, 107, 62, 0.3)); }
+    .mm-active-box {
+      background: var(--card-cream);
+      border: 1.8px solid var(--gold);
+      border-radius: 12px;
+      padding: 13px 18px;
+      width: 100%;
+      margin-top: 10px;
+      min-height: 86px;
+    }
+
+    /* Timeline */
+    .timeline-track {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      margin: 6px 24px 12px;
+      padding: 6px 0;
+    }
+    .timeline-track::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 28px;
+      left: 28px;
+      height: 4.5px;
+      background: linear-gradient(90deg, var(--emerald), var(--gold));
+      transform: translateY(-50%);
+      border-radius: 4px;
+    }
+    .tl-node {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--font-body);
+    }
+    .tl-dot {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--card-cream);
+      border: 3.2px solid var(--gold);
+      color: var(--forest-green);
+      font-weight: 900;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(59, 34, 11, 0.14);
+    }
+    .tl-node.active .tl-dot, .tl-node:hover .tl-dot {
+      background: var(--emerald);
+      border-color: var(--forest-green);
+      color: #fff;
+      transform: scale(1.16);
+    }
+    .tl-label {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--forest-green);
+      background: var(--bg-papyrus);
+      padding: 2px 10px;
+      border-radius: 8px;
+    }
+    .tl-spotlight {
+      background: var(--card-cream);
+      border: 2px solid var(--emerald);
+      border-radius: 14px;
+      padding: 15px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: var(--shadow-card);
+    }
+
+    /* Harrod-Domar Flow & Calc */
+    .flow-chain {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .flow-step {
+      flex: 1;
+      background: var(--card-cream);
+      border: 1.6px solid rgba(184, 139, 74, 0.55);
+      border-radius: 12px;
+      padding: 10px 12px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .flow-step:hover { border-color: var(--emerald); transform: translateY(-3px); }
+    .flow-arrow { color: var(--gold); font-size: 26px; font-weight: 900; animation: pulseRight 1.6s infinite; }
+    @keyframes pulseRight {
+      0%, 100% { transform: translateX(0); opacity: 0.72; }
+      50% { transform: translateX(-6px); opacity: 1; }
+    }
+    .hd-calc-box {
+      background: var(--card-cream);
+      border: 2px solid var(--emerald);
+      border-radius: 16px;
+      padding: 18px 22px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+    .hd-result-pill {
+      font-family: var(--font-display);
+      font-size: 46px;
+      font-weight: 700;
+      color: var(--emerald);
+      line-height: 1;
+    }
+
+    /* Gears & Orbits */
+    @keyframes spinCW { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes spinCCW { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+    .gear-cw { transform-origin: center; animation: spinCW 8s linear infinite; }
+    .gear-ccw { transform-origin: center; animation: spinCCW 8s linear infinite; }
+    .gear-jammed { animation: gearShake 0.4s ease-in-out infinite !important; }
+    @keyframes gearShake {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(4deg); }
+      75% { transform: rotate(-4deg); }
+    }
+    @keyframes orbitSpin { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -120; } }
+    .orbit-dash { animation: orbitSpin 6s linear infinite; }
+
+    /* Enlarged Portrait Frame (145px x 145px) */
+    .portrait-wrap {
+      width: 145px;
+      height: 145px;
+      border-radius: 50%;
+      border: 4.5px solid var(--gold);
+      overflow: hidden;
+      background: var(--forest-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 8px 22px rgba(59, 34, 11, 0.22);
+    }
+    .portrait-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .portrait-fallback {
+      font-family: var(--font-display);
+      font-size: 46px;
+      font-weight: 700;
+      color: var(--card-cream);
+    }
+
+    /* Animated Bridge Gap */
+    .bridge-half { transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+    .bridge-joined .bridge-left { transform: translateX(26px); }
+    .bridge-joined .bridge-right { transform: translateX(-26px); }
+
+    /* Ascending Pillars */
+    .stair-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      align-items: end;
+      flex: 1;
+    }
+    .stair-card {
+      background: var(--card-cream);
+      border: 1.6px solid rgba(184, 139, 74, 0.52);
+      border-top: 6px solid var(--emerald);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
+    }
+    .stair-card:hover { transform: translateY(-5px); }
+    .stair-1 { min-height: 210px; }
+    .stair-2 { min-height: 255px; border-top-color: var(--gold); }
+    .stair-3 { min-height: 300px; border-top-color: var(--forest-green); }
+
+    /* Balance Scale */
+    .scale-beam {
+      transform-origin: 160px 62px;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .hdi-vertex { cursor: pointer; transition: all 0.25s ease; }
+    .hdi-vertex:hover circle { fill: var(--emerald); }
+    .petal-btn { cursor: pointer; transition: all 0.3s ease; }
+    .petal-btn:hover { filter: drop-shadow(0 6px 14px rgba(46, 107, 62, 0.38)); }
+
+    /* Slide 20 Chips */
+    .issue-chip {
+      background: var(--card-cream);
+      border: 1.6px solid rgba(184, 139, 74, 0.55);
+      border-radius: 12px;
+      padding: 13px 16px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: right;
+    }
+    .issue-chip:hover, .issue-chip.active {
+      background: var(--forest-green);
+      color: var(--card-cream);
+      border-color: var(--gold);
+      transform: translateX(-4px);
+    }
+    .issue-chip .chip-sub { font-size: 14px; color: var(--emerald); font-weight: 800; margin-top: 3px; }
+    .issue-chip.active .chip-sub, .issue-chip:hover .chip-sub { color: var(--gold-light); }
+
+    /* Quiz Options */
+    .quiz-opt {
+      width: 100%;
+      text-align: right;
+      background: var(--card-cream);
+      border: 1.8px solid rgba(184, 139, 74, 0.6);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-family: var(--font-body);
+      font-size: clamp(16.5px, 1.35vw, 19px);
+      font-weight: 700;
+      color: var(--ink-brown);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .quiz-opt:hover:not(:disabled) { border-color: var(--emerald); background: #fff; transform: translateX(-4px); }
+    .quiz-opt.correct { background: var(--example-bg); border-color: var(--emerald); color: var(--forest-green); box-shadow: 0 0 0 2.5px var(--emerald); }
+    .quiz-opt.wrong { background: #F9E6E2; border-color: #A63D2B; color: #7A2315; }
+
+    /* Table */
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+      background: var(--card-cream);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.4px solid rgba(184, 139, 74, 0.45);
+    }
+    .mini-table th {
+      background: var(--forest-green);
+      color: var(--card-cream);
+      padding: 8px 12px;
+      text-align: right;
+      font-weight: 800;
+    }
+    .mini-table td {
+      padding: 8px 12px;
+      border-top: 1px solid rgba(184, 139, 74, 0.28);
+      font-weight: 600;
+      color: var(--ink-brown);
+    }
+
+    @media (max-width: 1080px) {
+      .section-pills { display: none; }
+      .split-2, .split-2.reverse, .cards-grid-4, .stair-grid { grid-template-columns: 1fr; }
+      .slide { padding: 18px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Line -->
+  <div class="top-progress-track"><div class="top-progress-fill" id="progressFill"></div></div>
+
+  <!-- Top Control Bar -->
+  <header class="top-bar">
+    <div class="section-pills" id="sectionPills">
+      <button class="sec-pill active" data-goto="0">١. النمو الاقتصادي</button>
+      <button class="sec-pill" data-goto="8">٢. رأس المال البشري</button>
+      <button class="sec-pill" data-goto="14">٣. اقتصاد المعرفة</button>
+      <button class="sec-pill" data-goto="18">٤. الاقتصاد الأخضر</button>
+      <button class="sec-pill" data-goto="21">٥. التفاعل والختام</button>
+    </div>
+
+    <div class="toolbar-actions">
+      <button class="tool-btn gold-pill" id="mediaCatalogBtn" title="استعراض جميع الفيديوهات والصور المدمجة (M)">🎬 دليل الفيديوهات والوسائط</button>
+      <button class="tool-btn" id="focusToggleBtn" title="إظهار البطاقات تدريجياً بالسهم للأسفل أو Enter">🎯 وضع التركيز التدريجي</button>
+      <button class="tool-btn" id="contrastToggleBtn" title="رفع التباين لإضاءة البروجيكتور الساطعة">☀️ إضاءة القاعة</button>
+      <button class="tool-btn" id="notesToggleBtn" title="نص الإلقاء للمتحدث (N)">🎙️ نص الإلقاء</button>
+      <button class="tool-btn" id="overviewToggleBtn" title="فهرس جميع الشرائح (G)">⊞ الفهرس</button>
+      <button class="tool-btn" id="fullscreenBtn" title="ملء الشاشة (F)">⛶ ملء الشاشة</button>
+    </div>
+  </header>
+
+  <!-- Main Presentation Stage -->
+  <main class="deck-viewport">
+    <div class="manuscript-frame" id="deckFrame">
+      <!-- Ornamental Editorial Corners -->
+      <svg class="corner-ornament corner-tr" viewBox="0 0 64 64" fill="none"><path d="M60 4H22C12 4 4 12 4 22V60" stroke="currentColor" stroke-width="2.2"/><path d="M52 12H24C17 12 12 17 12 24V52" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="3.5" fill="currentColor"/><path d="M20 4C20 12 12 20 4 20" stroke="currentColor" stroke-width="1.5"/></svg>
+      <svg class="corner-ornament corner-tl" viewBox="0 0 64 64" fill="none"><path d="M60 4H22C12 4 4 12 4 22V60" stroke="currentColor" stroke-width="2.2"/><path d="M52 12H24C17 12 12 17 12 24V52" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="3.5" fill="currentColor"/><path d="M20 4C20 12 12 20 4 20" stroke="currentColor" stroke-width="1.5"/></svg>
+      <svg class="corner-ornament corner-br" viewBox="0 0 64 64" fill="none"><path d="M60 4H22C12 4 4 12 4 22V60" stroke="currentColor" stroke-width="2.2"/><path d="M52 12H24C17 12 12 17 12 24V52" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="3.5" fill="currentColor"/><path d="M20 4C20 12 12 20 4 20" stroke="currentColor" stroke-width="1.5"/></svg>
+      <svg class="corner-ornament corner-bl" viewBox="0 0 64 64" fill="none"><path d="M60 4H22C12 4 4 12 4 22V60" stroke="currentColor" stroke-width="2.2"/><path d="M52 12H24C17 12 12 17 12 24V52" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="3.5" fill="currentColor"/><path d="M20 4C20 12 12 20 4 20" stroke="currentColor" stroke-width="1.5"/></svg>
+
+      <!-- =========================================================
+           SLIDE 1: GRAND INTRO COVER (CHAPTER 5 & SUPERVISION)
+           ========================================================= -->
+      <section class="slide active grand-center-slide" data-title="مقدمة العرض: الفصل الخامس — التعليم في النظريات الاقتصادية" data-notes="بسم الله الرحمن الرحيم. أهلاً ومرحباً بكم في عرضنا التقديمي الأكاديمي حول الفصل الخامس: التعليم في النظريات الاقتصادية، والذي يُقدَّم تحت إشراف الدكتور أحمد محسن. سنتناول معاً رحلة الفكر الاقتصادي من النمو المادي، مروراً برأس المال البشري والتنمية البشرية، وصولاً إلى اقتصاد المعرفة والاقتصاد الأخضر. فلنبدأ معاً.">
+        <div class="grand-medallion anim d1">
+          <div class="cover-emblem anim d1">✦ عرض تقديمي أكاديمي تفاعلي ✦</div>
+          <div style="font-family:var(--font-body); font-size:clamp(20px, 2vw, 28px); font-weight:900; color:var(--gold); letter-spacing:0.4px;" class="anim d2">الفصل الخامس</div>
+          <h1 class="cover-title anim d2">التعليم في النظريات الاقتصادية</h1>
+          <div class="gold-divider anim d3" style="width:280px;"></div>
+          <p class="slide-subtitle anim d3" style="max-width:760px;">النمو الاقتصادي • رأس المال البشري • اقتصاد المعرفة • الاقتصاد الأخضر</p>
+          <div class="supervisor-badge anim d4">
+            <span class="sup-label">تحت إشراف:</span>
+            <span>د/ أحمد محسن</span>
+          </div>
+          <button class="media-launch-btn anim d5" style="margin-top:12px; padding:11px 28px; font-size:16px;" onclick="changeSlide(1)">ابدأ العرض التقديمي ←</button>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 2: INTRO & FOUNDATIONS (OLD SLIDE 1)
+           ========================================================= -->
+      <section class="slide" data-title="تمهيد الفصل: دور وأهمية التعليم في النظريات الاقتصادية" data-notes="بعد الحرب العالمية الثانية، استقل علم التنمية الاقتصادية وكان ينظر للتقدم من زاوية المصانع والنمو المادي فقط، لكن القرن الحادي والعشرين أثبت أن التعليم هو العامل المحوري للتنمية؛ فهو يغذي الاقتصاد مباشرة بالمهارات، ويوفر على الدولة نفقات ضخمة في الصحة والقضاء، ويبني في الوقت ذاته قيماً وحريةً وتماسكاً اجتماعياً. دعونا الآن نستعرض الخريطة النظرية التي نظّم بها الاقتصاديون هذه العلاقة.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ٢</span> المحور الأول • تمهيد الفصل الخامس</div>
+          <h2 class="slide-title">تطور دور وأهمية التعليم في النظريات الاقتصادية</h2>
+          <h3 class="slide-subtitle">من النمو الاقتصادي المادي إلى رأس المال البشري والاقتصاد الأخضر — المساهمات والوظائف</h3>
+        </div>
+
+        <div class="cards-grid-4 anim d2">
+          <div class="ed-card focusable-card">
+            <div class="ed-card-head"><span class="num-badge gold">١</span><h4 class="ed-card-title">نقطة التحول التنموي</h4></div>
+            <p class="ed-card-text">عقب الحرب العالمية الثانية استقلت التنمية الاقتصادية، ثم تطورت بالقرن الـ21 لتدمج الكلاسيكية والنمو الداخلي.</p>
+          </div>
+          <div class="ed-card focusable-card">
+            <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">مساهمة اقتصادية مباشرة</h4></div>
+            <p class="ed-card-text">تحسين المعرفة القائمة وخلق مهارات جديدة تُنقل بكفاءة وفعالية من النظام التعليمي إلى الاقتصاد الحقيقي.</p>
+          </div>
+          <div class="ed-card focusable-card">
+            <div class="ed-card-head"><span class="num-badge">٣</span><h4 class="ed-card-title">مساهمة غير مباشرة</h4></div>
+            <p class="ed-card-text">خفض الإنفاق العام والمخصصات المالية على قطاعات الصحة والقضاء والحماية الاجتماعية بفضل ارتفاع الوعي.</p>
+          </div>
+          <div class="ed-card focusable-card">
+            <div class="ed-card-head"><span class="num-badge gold">٤</span><h4 class="ed-card-title">الوظيفتان المتكاملتان</h4></div>
+            <p class="ed-card-text">وظيفة اقتصادية تحقق التنمية والرفاهية، ووظيفة اجتماعية تبني العلاقات وتصون القيم والحرية الفردية.</p>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d3">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">🖼️</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • إنفوجرافيك تمهيدي</div>
+              <div class="media-teaser-title">مخطط تدفق التعليم نحو النمو الاقتصادي والرفاهية</div>
+              <div class="media-teaser-sub">لوحة بصرية من ملفات الفريق تلخص كيف يتحول الاستثمار التعليمي إلى نمو اقتصادي مستدام</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('img_edu_flow')">عرض الوسائط في وضع ملء الشاشة 🎬</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d4">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">تدريب الشباب على المهارات الرقمية والبرمجة ينقل المعرفة مباشرة لسوق العمل ويرفع إنتاجية الشركات (<strong>مساهمة مباشرة</strong>)، بينما يرفع الوعي الصحي الوقاية من الأمراض والحوادث فيوفر على الدولة جزءاً من ميزانية العلاج (<strong>مساهمة غير مباشرة</strong>).</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 3: MAP OF THEORIES
+           ========================================================= -->
+      <section class="slide" data-title="خريطة المناهج النظرية في اقتصاديات التنمية" data-notes="لفهم تطور الفكر الاقتصادي، لا بد أولاً من التمييز الدقيق بين النمو كزيادة كمية في الإنتاج، والتنمية كعملية شاملة متعددة الأبعاد. ومن هنا تنقسم أدبيات اقتصاديات التنمية إلى مسارين كبيرين: الأول يفسر التنمية والنمو عموماً، والثاني يركز على الترابط المتبادل بين التعليم والتنمية. ولكي نرى كيف تبلورت هذه المناهج عبر الزمن، لننتقل إلى استعراض عقود التنمية للأمم المتحدة.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ٣</span> المحور الأول • المفاهيم الأساسية والنمو الاقتصادي</div>
+          <h2 class="slide-title">خريطة المناهج النظرية في اقتصاديات التنمية</h2>
+          <h3 class="slide-subtitle">التمييز المنهجي بين النمو والتنمية وتصنيف المدارس الفكرية — انقر على أي فرع في الخريطة للاستكشاف</h3>
+        </div>
+
+        <div class="split-2">
+          <div class="cards-stack anim d2">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">١</span><h4 class="ed-card-title">الفرق الجوهري بين النمو والتنمية</h4></div>
+              <p class="ed-card-text">ساوى النهج الكلاسيكي الأول بين النمو والتنمية كمترادفين، بينما يثبت المفهوم الحديث أن التنمية عملية متعددة الأبعاد وليست اقتصادية فحسب.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">نظريات التنمية الاقتصادية</h4></div>
+              <p class="ed-card-text">تشمل الجذور الفكرية للعلم عبر فرعين رئيسيين: <strong>النظرية الكلاسيكية</strong>، و<strong>النماذج المعاصرة للتنمية والتخلف</strong>.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٣</span><h4 class="ed-card-title">نظريات الترابط المتبادل (التعليم ↔ التنمية)</h4></div>
+              <p class="ed-card-text">تدرس العلاقة التبادلية عبر ثلاثة مناهج: <strong>رأس المال البشري</strong>، <strong>التنمية البشرية</strong>، و<strong>عوائد الاستثمار في التعليم</strong>.</p>
+            </div>
+          </div>
+
+          <div class="visual-panel anim d3">
+            <svg viewBox="0 0 480 250" style="max-height:330px;">
+              <path d="M240 52 C240 88, 360 76, 360 112" stroke="#B88B4A" stroke-width="3" fill="none"/>
+              <path d="M240 52 C240 88, 120 76, 120 112" stroke="#2E6B3E" stroke-width="3" fill="none"/>
+              <line x1="360" y1="154" x2="412" y2="190" stroke="#B88B4A" stroke-width="2.4"/>
+              <line x1="360" y1="154" x2="306" y2="190" stroke="#B88B4A" stroke-width="2.4"/>
+              <line x1="120" y1="154" x2="194" y2="190" stroke="#2E6B3E" stroke-width="2.4"/>
+              <line x1="120" y1="154" x2="120" y2="190" stroke="#2E6B3E" stroke-width="2.4"/>
+              <line x1="120" y1="154" x2="46" y2="190" stroke="#2E6B3E" stroke-width="2.4"/>
+
+              <g class="mindmap-node" onclick="selectMindmap('root')">
+                <rect x="132" y="10" width="216" height="44" rx="22" fill="#1A3A22"/>
+                <text x="240" y="37" text-anchor="middle" fill="#FAF5E8" font-family="Cairo" font-weight="800" font-size="15">مناهج اقتصاديات التنمية</text>
+              </g>
+              <g class="mindmap-node" onclick="selectMindmap('dev')">
+                <rect x="272" y="112" width="176" height="42" rx="11" fill="#B88B4A"/>
+                <text x="360" y="138" text-anchor="middle" fill="#fff" font-family="Cairo" font-weight="800" font-size="13.5">نظريات التنمية الاقتصادية</text>
+              </g>
+              <g class="mindmap-node" onclick="selectMindmap('classic')">
+                <rect x="366" y="190" width="96" height="42" rx="9" fill="#FAF5E8" stroke="#B88B4A" stroke-width="2"/>
+                <text x="414" y="216" text-anchor="middle" fill="#3B220B" font-family="Cairo" font-weight="800" font-size="13">الكلاسيكية</text>
+              </g>
+              <g class="mindmap-node" onclick="selectMindmap('modern')">
+                <rect x="256" y="190" width="102" height="42" rx="9" fill="#FAF5E8" stroke="#B88B4A" stroke-width="2"/>
+                <text x="307" y="216" text-anchor="middle" fill="#3B220B" font-family="Cairo" font-weight="800" font-size="12.5">النماذج المعاصرة</text>
+              </g>
+
+              <g class="mindmap-node" onclick="selectMindmap('edu')">
+                <rect x="28" y="112" width="184" height="42" rx="11" fill="#2E6B3E"/>
+                <text x="120" y="138" text-anchor="middle" fill="#fff" font-family="Cairo" font-weight="800" font-size="13.5">الترابط (التعليم والتنمية)</text>
+              </g>
+              <g class="mindmap-node" onclick="selectMindmap('hc')">
+                <rect x="156" y="190" width="84" height="42" rx="9" fill="#E5EFE0" stroke="#2E6B3E" stroke-width="2"/>
+                <text x="198" y="216" text-anchor="middle" fill="#1A3A22" font-family="Cairo" font-weight="800" font-size="11.5">رأس المال البشري</text>
+              </g>
+              <g class="mindmap-node" onclick="selectMindmap('hd')">
+                <rect x="82" y="190" width="70" height="42" rx="9" fill="#E5EFE0" stroke="#2E6B3E" stroke-width="2"/>
+                <text x="117" y="216" text-anchor="middle" fill="#1A3A22" font-family="Cairo" font-weight="800" font-size="11.5">التنمية البشرية</text>
+              </g>
+              <g class="mindmap-node" onclick="selectMindmap('roi')">
+                <rect x="4" y="190" width="74" height="42" rx="9" fill="#E5EFE0" stroke="#2E6B3E" stroke-width="2"/>
+                <text x="41" y="216" text-anchor="middle" fill="#1A3A22" font-family="Cairo" font-weight="800" font-size="11.5">عوائد التعليم</text>
+              </g>
+            </svg>
+            <div class="mm-active-box" id="mmInfoBox">
+              <div style="font-weight:800; color:var(--emerald); font-size:15.5px;">✦ تفاعل مع الخريطة:</div>
+              <div style="font-size:15.5px; font-weight:600; color:var(--ink-brown); margin-top:4px;">انقر على أي فرع أعلاه لعرض محوره الاقتصادي ودوره في مسار العرض التقديمي.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="example-box anim d4">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">قد تحقق دولة ارتفاعاً سريعاً في الناتج الصناعي (<strong>نمو اقتصادي</strong>) دون تحسن في جودة التعليم أو العدالة أو الصحة؛ أما <strong>التنمية الحقيقية</strong> فتقيس تحسن جودة حياة المواطن وقدراته بجانب نمو الدخل.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 4: UN DEVELOPMENT DECADES
+           ========================================================= -->
+      <section class="slide" data-title="عقود التنمية للأمم المتحدة: رحلة الفكر التنموي" data-notes="لم يولد الاهتمام بالتعليم فجأة، بل كان ثمرة ستة عقود من التجارب التنموية. بدأنا في الخمسينيات والستينيات بالتركيز على المصانع والتحول من الزراعة للصناعة، ثم التفت العالم في السبعينيات لفرص العمل والرفاهية، وفي الثمانينيات للانفتاح والتنافسية ونظريات النمو الداخلي، وصولاً للتسعينيات والقرن الحادي والعشرين حيث تبلورت التنمية المستدامة وأولوية رأس المال البشري. ولنبدأ الآن بأول مدرسة في خريطتنا: المدرسة الكلاسيكية.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ٤</span> المحور الأول • التطور التاريخي للفكر التنموي</div>
+          <h2 class="slide-title">تطور الفكر التنموي عبر عقود التنمية للأمم المتحدة</h2>
+          <h3 class="slide-subtitle">انقر على كل حقبة في الخط الزمني لمشاهدة التحول من أولوية المصانع إلى الاستثمار في الإنسان</h3>
+        </div>
+
+        <div class="anim d2">
+          <div class="timeline-track" id="timelineTrack">
+            <button class="tl-node active" onclick="selectDecade(0)"><span class="tl-dot">50s–60s</span><span class="tl-label">الخمسينيات والستينيات</span></button>
+            <button class="tl-node" onclick="selectDecade(1)"><span class="tl-dot">70s</span><span class="tl-label">السبعينيات</span></button>
+            <button class="tl-node" onclick="selectDecade(2)"><span class="tl-dot">80s</span><span class="tl-label">الثمانينيات</span></button>
+            <button class="tl-node" onclick="selectDecade(3)"><span class="tl-dot">90s–21c</span><span class="tl-label">التسعينيات والقرن ٢١</span></button>
+          </div>
+
+          <div class="tl-spotlight" id="tlSpotlight">
+            <div>
+              <span class="example-tag" style="background:var(--gold);" id="tlBadge">الحقبة ١: التصنيع والتحول البنيوي</span>
+              <h4 id="tlTitle" style="font-family:var(--font-display); font-size:28px; color:var(--forest-green); margin:6px 0 4px;">الخمسينيات والستينيات: التصنيع والثنائية القطاعية</h4>
+              <p id="tlDesc" style="font-size:17.5px; font-weight:600; color:var(--ink-brown); line-height:1.6;">
+                ركزت الخمسينيات على التصنيع كقوة دافعة مقابل الزراعة (الدفعة الكبيرة، مراحل النمو الخطي)، وأسست الستينيات لنظريات التغيير البنيوي (نموذج لويس ثنائي القطاع وأنماط شينري).
+              </p>
+            </div>
+            <div style="text-align:center; min-width:190px; background:var(--example-bg); padding:12px 16px; border-radius:12px; border:1.5px solid rgba(46,107,62,0.35);">
+              <div style="font-size:13.5px; font-weight:800; color:var(--emerald);">مقياس النجاح التنموي</div>
+              <div id="tlMetric" style="font-family:var(--font-display); font-size:26px; font-weight:700; color:var(--forest-green); margin-top:4px;">عدد المصانع والإنتاج</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cards-grid-4 anim d3">
+          <div class="ed-card focusable-card" style="cursor:pointer;" onclick="selectDecade(0)">
+            <div class="ed-card-head"><span class="num-badge gold">١</span><h4 class="ed-card-title">٥٠–٦٠: التصنيع</h4></div>
+            <p class="ed-card-text">الدفعة الكبيرة، مراحل النمو الخطي، ونموذج لويس ثنائي القطاع وأنماط شينري.</p>
+          </div>
+          <div class="ed-card focusable-card" style="cursor:pointer;" onclick="selectDecade(1)">
+            <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">٧٠: التوظيف والرفاه</h4></div>
+            <p class="ed-card-text">زيادة فرص العمل ومستوى المعيشة بمشاركة منظمة العمل الدولية والبنك الدولي.</p>
+          </div>
+          <div class="ed-card focusable-card" style="cursor:pointer;" onclick="selectDecade(2)">
+            <div class="ed-card-head"><span class="num-badge">٣</span><h4 class="ed-card-title">٨٠: الأسواق والنمو الداخلي</h4></div>
+            <p class="ed-card-text">تشجيع الصادرات والتنافسية وظهور الكلاسيكية الجديدة ونظرية النمو الداخلي.</p>
+          </div>
+          <div class="ed-card focusable-card" style="cursor:pointer;" onclick="selectDecade(3)">
+            <div class="ed-card-head"><span class="num-badge gold">٤</span><h4 class="ed-card-title">٩٠–٢١: الاستدامة والإنسان</h4></div>
+            <p class="ed-card-text">عودة دور الدولة، التنمية المستدامة، وأهداف الألفية للتعليم والصحة.</p>
+          </div>
+        </div>
+
+        <div class="example-box anim d4">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">في <strong>خمسينيات القرن العشرين</strong> كانت الدولة تقيس نجاحها بعدد المصانع وحجم الإنتاج الصناعي، أما في <strong>القرن الحادي والعشرين</strong> فأصبح مقياس التقدم يشمل جودة التعليم، والرعاية الصحية، ومستوى معيشة المواطن.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 5: CLASSICAL SCHOOL + MALTHUS SIMULATOR + VIDEO TEASER
+           ========================================================= -->
+      <section class="slide" data-title="المدرسة الكلاسيكية للنمو: التفاؤل، التشاؤم، والاعتدال" data-notes="في قلب المدرسة الكلاسيكية، نجد ثلاث رؤى متباينة لمستقبل النمو. آدم سميث كان متفائلاً باستمرار النمو عبر تقسيم العمل وتراكم رأس المال واليد الخفية، لكنه أغفل أثر إحلال الآلة محل العامل وتناقص العوائد. وعلى النقيض، حذر ريكاردو من ندرة الأراضي ومالتوس من الانفجار السكاني. وجاء جون ستيوارت ميل بمسار معتدل يراهن على الوعي الأخلاقي والثقافي. يمكنكم تشغيل الفيديو التوضيحي لنظرية الاقتصاد الكلاسيكي لتعزيز الفكرة قبل الانتقال للنماذج المعاصرة.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ٥</span> المحور الأول • المدرسة الكلاسيكية</div>
+          <h2 class="slide-title">المدرسة الكلاسيكية للنمو: التفاؤل، التشاؤم، والاعتدال</h2>
+          <h3 class="slide-subtitle">قراءة مقارنة لتصورات آدم سميث وريكاردو ومالتوس وجون ستيوارت ميل — جرّب محاكي متوالية مالتوس</h3>
+        </div>
+
+        <div class="split-2">
+          <div class="cards-grid-2 anim d2">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">١</span><h4 class="ed-card-title">المتفائلة (آدم سميث)</h4></div>
+              <p class="ed-card-text">التنمية مستمرة للأبد عبر تراكم رأس المال وتقسيم العمل واليد الخفية، مفترضاً عائدات ثابتة وتكامل الآلات مع العمل.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">٢</span><h4 class="ed-card-title">المتشائمة (ريكاردو)</h4></div>
+              <p class="ed-card-text">اهتم بتوزيع الدخل والتجارة، وأكد أن ندرة الأراضي الخصبة ترفع التكلفة وتفرض سقفاً يوقف النمو الاقتصادي.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">٣</span><h4 class="ed-card-title">المتشائمة (مالتوس)</h4></div>
+              <p class="ed-card-text">تنبأ بتوقف النمو لأن السكان ينمون بمتوالية هندسية متضاعفة تتجاوز النمو الحسابي المحدود لإنتاج الغذاء.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٤</span><h4 class="ed-card-title">المعتدلة (جون ستيوارت ميل)</h4></div>
+              <p class="ed-card-text">رفض التشاؤم وعوّل على «ضبط النفس الأخلاقي» لتخفيف الاكتظاظ السكاني وحدوث تغيير ثقافي يحد من روح الاستحواذ.</p>
+            </div>
+          </div>
+
+          <div class="visual-panel anim d3" style="gap:8px;">
+            <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
+              <strong style="color:var(--forest-green); font-size:16.5px;">محاكي فجوة مالتوس (السكان مقابل الغذاء)</strong>
+              <span style="font-size:15px; font-weight:800; color:var(--emerald);" id="malthusStepLbl">الجيل: ٥</span>
+            </div>
+            <svg viewBox="0 0 380 205" style="max-height:310px;" id="malthusSvg">
+              <line x1="40" y1="172" x2="360" y2="172" stroke="#3B220B" stroke-width="2"/>
+              <line x1="40" y1="16" x2="40" y2="172" stroke="#3B220B" stroke-width="2"/>
+              <line x1="40" y1="126" x2="360" y2="126" stroke="#B88B4A" stroke-dasharray="3 4" opacity="0.45"/>
+              <line x1="40" y1="80" x2="360" y2="80" stroke="#B88B4A" stroke-dasharray="3 4" opacity="0.45"/>
+              <line x1="40" y1="34" x2="360" y2="34" stroke="#B88B4A" stroke-dasharray="3 4" opacity="0.45"/>
+              <polygon id="malthusGap" fill="rgba(184, 139, 74, 0.24)"/>
+              <polyline id="foodLine" fill="none" stroke="#2E6B3E" stroke-width="3.8" stroke-linecap="round"/>
+              <polyline id="popLine" fill="none" stroke="#3B220B" stroke-width="3.8" stroke-dasharray="7 4" stroke-linecap="round"/>
+              <g id="malthusDots"></g>
+              <text x="200" y="196" text-anchor="middle" fill="#5C4024" font-family="Cairo" font-size="13" font-weight="800">الزمن (الأجيال ١ إلى ٥)</text>
+            </svg>
+            <input type="range" min="1" max="5" value="5" class="papyrus-slider" id="malthusSlider" oninput="updateMalthus(this.value)" />
+            <div style="display:flex; justify-content:space-between; width:100%; font-size:15px; font-weight:800;">
+              <span style="color:var(--ink-brown);">● السكان (هندسي): <b id="popVal">32</b></span>
+              <span style="color:var(--emerald);">● الغذاء (حسابي): <b id="foodVal">10</b></span>
+              <span style="color:var(--gold);">الفجوة: <b id="gapVal">22</b></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d4">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">▶</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • فيديو محلي جاهز للتشغيل</div>
+              <div class="media-teaser-title">نظرية الاقتصاد الكلاسيكي (ملف الفريق — ص 88–90)</div>
+              <div class="media-teaser-sub">عرض مبسط لأبرز أفكار المدرسة الكلاسيكية ومقارنتها بالتطورات اللاحقة</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('vid_classical')">عرض الوسائط في وضع ملء الشاشة 🎬</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d5">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">عند <strong>سميث</strong> يضاعف تقسيم العمل في مصنع الدبابيس الإنتاجية والأجور، بينما عند <strong>مالتوس</strong> ينمو الغذاء حسابياً (2، 4، 6، 8، 10) والسكان هندسياً (2، 4، 8، 16، 32) فتنشأ فجوة غذائية توقف النمو.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 6: NEOCLASSICAL & ENDOGENOUS + VIDEO TEASER
+           ========================================================= -->
+      <section class="slide" data-title="النماذج المعاصرة: النمو الداخلي والنموذج الكلاسيكي الجديد" data-notes="أظهرت النتائج السلبية للتفسير الكلاسيكي أن الاقتصاد بحاجة إلى نماذج معاصرة تبحث عن محركات النمو داخله. فجاء إطار النمو الداخلي ليربط التنمية بالتعليم والصحة والعدالة، بينما قدم النموذج الكلاسيكي الجديد تفسيراً مهماً للنمو طويل الأجل مؤكداً أن تراكم الآلات وحده يخضع لتناقص العائد ولا يكفي بلا تكنولوجيا. يمكننا الآن عرض فيديو نظرية النمو الداخلي ثم الانتقال إلى نموذج هارود–دومار.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ٦</span> المحور الأول • النماذج المعاصرة للتنمية والتخلف</div>
+          <h2 class="slide-title">النماذج المعاصرة: النمو الداخلي والنموذج الكلاسيكي الجديد</h2>
+          <h3 class="slide-subtitle">لماذا لا يكفي تراكم الآلات وحده؟ اختبر أثر التكنولوجيا والابتكار على منحنى الإنتاج</h3>
+        </div>
+
+        <div class="split-2">
+          <div class="cards-stack anim d2">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">١</span><h4 class="ed-card-title">إطار النمو الداخلي والتنمية الاجتماعية</h4></div>
+              <p class="ed-card-text">لا تعتمد التنمية على المال وحده، بل على تفاعل التعليم والصحة والابتكار مع البيئة والعدالة والمشاركة في القوى العاملة.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">جوهر النموذج الكلاسيكي الجديد</h4></div>
+              <p class="ed-card-text">يفسر النمو طويل الأجل بتراكم رأس المال وتطور التكنولوجيا وكفاءة الإنتاج، مفترضاً عقلانية الأفراد والشركات في تعظيم الربح.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">٣</span><h4 class="ed-card-title">قانون تناقص العائد وحدود النموذج</h4></div>
+              <p class="ed-card-text">يتناقص عائد الآلات دون تقدم تكنولوجي؛ كما يُؤخذ على النموذج عدم تفسير مصدر التكنولوجيا وإغفال دور المؤسسات وتوزيع الثروة.</p>
+            </div>
+          </div>
+
+          <div class="visual-panel anim d3" style="gap:10px;">
+            <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+              <button class="int-btn active" id="neoBtnPlain" onclick="toggleNeoTech(false)">آلات فقط (تناقص العائد)</button>
+              <button class="int-btn gold-btn" id="neoBtnTech" onclick="toggleNeoTech(true)">+ التكنولوجيا والابتكار ✦</button>
+            </div>
+            <svg viewBox="0 0 380 220" style="max-height:320px;">
+              <line x1="42" y1="186" x2="358" y2="186" stroke="#3B220B" stroke-width="2"/>
+              <line x1="42" y1="18" x2="42" y2="186" stroke="#3B220B" stroke-width="2"/>
+              <path d="M 42 186 Q 118 110, 344 106" fill="none" stroke="#5C4024" stroke-width="3.5" stroke-dasharray="7 4"/>
+              <text x="260" y="130" fill="#5C4024" font-family="Cairo" font-size="13" font-weight="800">تسطّح العائد (آلات فقط)</text>
+              <path id="neoTechCurve" d="M 42 186 Q 140 94, 344 26" fill="none" stroke="#2E6B3E" stroke-width="4.5" stroke-linecap="round" style="stroke-dasharray:410; stroke-dashoffset:410; transition: stroke-dashoffset 0.85s ease;"/>
+              <g id="neoTechLabel" style="opacity:0; transition:opacity 0.5s ease;">
+                <circle cx="344" cy="26" r="7" fill="#B88B4A"/>
+                <rect x="166" y="16" width="164" height="30" rx="15" fill="#2E6B3E"/>
+                <text x="248" y="36" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="13" font-weight="800">قفزة الإنتاج بالتكنولوجيا</text>
+              </g>
+              <text x="200" y="210" text-anchor="middle" fill="#3B220B" font-family="Cairo" font-size="13.5" font-weight="800">تراكم رأس المال (عدد الآلات)</text>
+              <text x="18" y="102" text-anchor="middle" fill="#3B220B" font-family="Cairo" font-size="13.5" font-weight="800" transform="rotate(-90 18 102)">حجم الإنتاج</text>
+            </svg>
+            <div id="neoCaption" style="font-size:15px; font-weight:700; color:var(--ink-muted); text-align:center;">
+              إضافة الآلات المتماثلة ترفع الإنتاج بدايةً ثم تتباطأ الزيادة الإضافية تدريجياً.
+            </div>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d4">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">▶</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • فيديو محلي جاهز للتشغيل</div>
+              <div class="media-teaser-title">نظرية النمو الداخلي (ملف الفريق — ص 88–90)</div>
+              <div class="media-teaser-sub">يوضح كيف ينبع النمو الاقتصادي من داخل الاقتصاد عبر المعرفة والابتكار والاستثمار في الإنسان</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('vid_endogenous')">عرض الوسائط في وضع ملء الشاشة 🎬</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d5">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">إذا اشترى مصنع آلات إضافية من النوع نفسه سيزيد إنتاجه في البداية، لكن استمرار إضافة الآلات دون تطوير تكنولوجي أو أسلوب عمل مبتكر يؤدي لتناقص الزيادة الإضافية في الإنتاج تدريجياً.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 7: HARROD-DOMAR + CALCULATOR + SAVINGS VIDEO
+           ========================================================= -->
+      <section class="slide" data-title="نموذج هارود–دومار: معادلة الادخار والاستثمار" data-notes="يقدم السير روي هارود وإيفسي دومار سلسلة سببية واضحة للنمو الاقتصادي تبدأ من قرار المجتمع بترشيد الاستهلاك والادخار، ثم تحويل هذه المدخرات عبر البنوك والمؤسسات إلى استثمارات مادية في المصانع والبنية التحتية. وتكمن القوة العملية للنموذج في معادلته التي تحدد بدقة حجم رأس المال المطلوب لتحقيق أي معدل نمو مستهدف. دعونا نشاهد فيديو مفهوم الادخار ونجرّب حاسبة النموذج معاً.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ٧</span> المحور الأول • نموذج هارود–دومار (١٩٣٠–١٩٤٠)</div>
+          <h2 class="slide-title">نموذج هارود–دومار: معادلة الادخار والاستثمار</h2>
+          <h3 class="slide-subtitle">التفاعل المباشر بين المدخرات والاستثمار وتكوين رأس المال — جرّب حاسبة النموذج التفاعلية</h3>
+        </div>
+
+        <div class="flow-chain anim d2">
+          <div class="flow-step"><div style="color:var(--gold); font-weight:900; font-size:13.5px;">الخطوة ١</div><div style="font-weight:800; color:var(--forest-green); font-size:18px;">الادخار (Savings)</div><div style="font-size:13.5px; color:var(--ink-muted);">أسر • شركات • حكومة</div></div>
+          <div class="flow-arrow">←</div>
+          <div class="flow-step"><div style="color:var(--gold); font-weight:900; font-size:13.5px;">الخطوة ٢</div><div style="font-weight:800; color:var(--forest-green); font-size:18px;">الاستثمار (Investment)</div><div style="font-size:13.5px; color:var(--ink-muted);">مصانع • آلات • بنية تحتية</div></div>
+          <div class="flow-arrow">←</div>
+          <div class="flow-step"><div style="color:var(--gold); font-weight:900; font-size:13.5px;">الخطوة ٣</div><div style="font-weight:800; color:var(--forest-green); font-size:18px;">تراكم رأس المال</div><div style="font-size:13.5px; color:var(--ink-muted);">توسيع الطاقة الإنتاجية</div></div>
+          <div class="flow-arrow">←</div>
+          <div class="flow-step" style="background:var(--example-bg); border-color:var(--emerald);"><div style="color:var(--emerald); font-weight:900; font-size:13.5px;">النتيجة</div><div style="font-weight:800; color:var(--forest-green); font-size:18px;">النمو الاقتصادي</div><div style="font-size:13.5px; color:var(--emerald);">ارتفاع الناتج القومي</div></div>
+        </div>
+
+        <div class="split-2 anim d3">
+          <div class="cards-stack">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">١</span><h4 class="ed-card-title">نشأة النموذج ومبتكروه</h4></div>
+              <p class="ed-card-text">طوّره <strong>السير روي هارود</strong> و<strong>إيفسي دومار</strong> في ثلاثينيات وأربعينيات القرن العشرين لربط النمو بالمدخرات والاستثمار والتكنولوجيا.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">العلاقة بين الادخار والاستثمار</h4></div>
+              <p class="ed-card-text">كلما زادت المدخرات المتاحة لتمويل السلع الرأسمالية الجديدة (المصانع والطرق والكهرباء) ارتفعت إنتاجية الاقتصاد وزادت سرعة نموه.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">٣</span><h4 class="ed-card-title">ثبات نسبة رأس المال إلى الناتج</h4></div>
+              <p class="ed-card-text">يفترض ثبات مقدار رأس المال المطلوب لإنتاج وحدة ناتج؛ فزيادة الناتج تتطلب زيادة مخزون رأس المال بنسبة متناسبة.</p>
+            </div>
+          </div>
+
+          <div class="hd-calc-box">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="color:var(--forest-green); font-size:18px;">⚡ حاسبة معادلة هارود–دومار التفاعلية</strong>
+              <button class="int-btn" style="padding:5px 12px; font-size:13px;" onclick="resetHD()">مثال الكتاب (4×5)</button>
+            </div>
+            <div style="background:var(--bg-papyrus); padding:9px 14px; border-radius:10px; font-size:14.5px; font-weight:800; color:var(--ink-brown); text-align:center;">
+              الزيادة المطلوبة في رأس المال (%) = نسبة رأس المال إلى الناتج × النمو المستهدف (%)
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:15.5px; font-weight:800; margin-bottom:5px;">
+                <span>نسبة رأس المال إلى الناتج:</span><span style="color:var(--emerald);" id="hdRatioVal">4 : 1</span>
+              </div>
+              <input type="range" min="1" max="6" step="0.5" value="4" class="papyrus-slider" id="hdRatio" oninput="calcHD()" />
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:15.5px; font-weight:800; margin-bottom:5px;">
+                <span>نسبة الزيادة المستهدفة في الناتج:</span><span style="color:var(--gold);" id="hdGrowthVal">5%</span>
+              </div>
+              <input type="range" min="1" max="10" step="1" value="5" class="papyrus-slider" id="hdGrowth" oninput="calcHD()" />
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; background:var(--example-bg); padding:12px 18px; border-radius:12px; border:1.5px solid rgba(46,107,62,0.4);">
+              <span style="font-weight:800; color:var(--forest-green); font-size:16.5px;">الزيادة المطلوبة في مخزون رأس المال:</span>
+              <span class="hd-result-pill" id="hdResult">20%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d4">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">▶</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • فيديو محلي (ص 90–92)</div>
+              <div class="media-teaser-title">مفهوم الادخار ودوره كنقطة انطلاق للنمو الاقتصادي</div>
+              <div class="media-teaser-sub">يشرح كيف تتحول الأموال المقتطعة من الاستهلاك إلى وقود لتمويل المشروعات الإنتاجية</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('vid_savings')">عرض الوسائط في وضع ملء الشاشة 🎬</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d5">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text"><strong>تطبيق الكتاب:</strong> اقتصاد نسبة رأس المال إلى الناتج فيه <strong>(4 : 1)</strong> ويريد زيادة ناتجه القومي بنسبة <strong>5%</strong>، يحتاج لزيادة مخزون رأسماله بنسبة <strong>20%</strong> (4 × 5 = 20%).</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 8: HARROD-DOMAR STABILITY & GEARS (OLD SLIDE 7 — NO VIDEO)
+           ========================================================= -->
+      <section class="slide" data-title="شروط الاستقرار والحدود النقدية لنموذج هارود–دومار" data-notes="يعلّمنا نموذج هارود–دومار درسين حاسمين للسياسات الاقتصادية: الأول أن النمو غير المتوازن بين القطاعات يولّد اختناقات، والثاني أن ضخ استثمارات تفوق قدرة السوق الاستيعابية يشعل التضخم. ومع ذلك، تشترك النماذج المادية السابقة في ثغرة كبرى: أنها ركزت على الآلات والمصانع والأموال وأغفلت العنصر الذي يديرها ويبتكرها. وهنا ننتقل إلى المحور الثاني: التحول الجذري نحو رأس المال البشري.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ٨</span> المحور الأول • ختام نماذج النمو المادي</div>
+          <h2 class="slide-title">شروط الاستقرار والحدود النقدية لنموذج هارود–دومار</h2>
+          <h3 class="slide-subtitle">التكنولوجيا، والتوازن القطاعي، واستيعاب الاستثمار دون تضخم — ومقارنته بالكلاسيكي الجديد</h3>
+        </div>
+
+        <div class="split-2">
+          <div class="cards-stack anim d2">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">١</span><h4 class="ed-card-title">دور التقدم التكنولوجي</h4></div>
+              <p class="ed-card-text">يعترف النموذج بأن التحسينات التكنولوجية ترفع الكفاءة فتتيح إنتاج سلع وخدمات أكثر بنفس كمية المدخلات.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">النمو المتوازن للقطاعات</h4></div>
+              <p class="ed-card-text">يشترط نمو جميع قطاعات الاقتصاد بالمعدل نفسه للحفاظ على الاستقرار وتجنب الاختناقات والأزمات الهيكلية.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">٣</span><h4 class="ed-card-title">محددات النمو دون تضخم والانتقادات</h4></div>
+              <p class="ed-card-text">يتحدد النمو بمستوى الاستثمار وقدرة السوق على استيعابه دون تضخم؛ ويُؤخذ عليه افتراض تحول المدخرات تلقائياً وإغفال رأس المال البشري.</p>
+            </div>
+          </div>
+
+          <div class="visual-panel anim d3" style="justify-content:space-between; gap:10px;">
+            <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+              <button class="int-btn active" id="gearBalancedBtn" onclick="setGearMode(true)">نمو متوازن مستقر ✓</button>
+              <button class="int-btn gold-btn" id="gearJamBtn" onclick="setGearMode(false)">محاكاة اختلال وتضخم ⚠</button>
+            </div>
+
+            <svg viewBox="0 0 380 165" style="max-height:250px;">
+              <g id="gear1" class="gear-cw" style="transform-origin: 100px 82px;">
+                <circle cx="100" cy="82" r="42" fill="#E5EFE0" stroke="#2E6B3E" stroke-width="7" stroke-dasharray="11 6"/>
+                <circle cx="100" cy="82" r="28" fill="#2E6B3E"/>
+              </g>
+              <text x="100" y="87" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="14" font-weight="800">الصناعة</text>
+
+              <g id="gear2" class="gear-ccw" style="transform-origin: 190px 82px;">
+                <circle cx="190" cy="82" r="42" fill="#FAF5E8" stroke="#B88B4A" stroke-width="7" stroke-dasharray="11 6"/>
+                <circle cx="190" cy="82" r="28" fill="#B88B4A"/>
+              </g>
+              <text x="190" y="87" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="12.5" font-weight="800">البنية التحتية</text>
+
+              <g id="gear3" class="gear-cw" style="transform-origin: 280px 82px;">
+                <circle cx="280" cy="82" r="42" fill="#E5EFE0" stroke="#1A3A22" stroke-width="7" stroke-dasharray="11 6"/>
+                <circle cx="280" cy="82" r="28" fill="#1A3A22"/>
+              </g>
+              <text x="280" y="87" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="14" font-weight="800">الزراعة</text>
+            </svg>
+
+            <div id="gearStatus" style="font-size:15px; font-weight:800; color:var(--emerald); text-align:center;">✓ جميع القطاعات تنمو بتناغم واستيعاب استثماري دون تضخم.</div>
+
+            <table class="mini-table">
+              <thead><tr><th>النموذج</th><th>المحرك الأساسي للنمو</th></tr></thead>
+              <tbody>
+                <tr><td><strong>الكلاسيكي الجديد</strong></td><td>رأس المال + التقدم التكنولوجي + كفاءة الإنتاج</td></tr>
+                <tr><td><strong>هارود–دومار</strong></td><td>الادخار ← الاستثمار ← تراكم رأس المال ← الإنتاج</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="example-box anim d4">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">إذا توسعت دولة في بناء المصانع بسرعة وأهملت شبكات الكهرباء والنقل أو المواد الخام الزراعية، ستتوقف المصانع عن العمل بكامل طاقتها وتنشأ أزمة اختناق اقتصادي بسبب غياب التوازن القطاعي.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 9: SHIFT TO HUMAN CAPITAL + ILLUSTRATION TEASER
+           ========================================================= -->
+      <section class="slide" data-title="التحول الفكري: من رأس المال المادي إلى رأس المال البشري" data-notes="بانتقالنا إلى المحور الثاني، نشهد نقلة نوعية في الفكر الاقتصادي: التعليم لم يعد خدمة استهلاكية أو مجرد ثقافة عامة، بل أصبح استثماراً منتجاً في 'رأس المال البشري'. تماماً كما أثبتت تجربة ألمانيا واليابان بعد الحرب، يمكن تعويض الآلات المدمرة سريعاً إذا امتلكت الأمة عقولاً مؤهلة. ولنبدأ استكشاف أبرز رواد هذه المدرسة مع العالم الاقتصادي ثيودور شولتز.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ٩</span> المحور الثاني • رأس المال البشري</div>
+          <h2 class="slide-title">التحول الفكري: من رأس المال المادي إلى رأس المال البشري</h2>
+          <h3 class="slide-subtitle">الإنسان بوصفه المحرك الحقيقي لصناعة الثروة ومضاعفة كفاءة ساعات العمل</h3>
+        </div>
+
+        <div class="split-2">
+          <div class="cards-stack anim d2">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">١</span><h4 class="ed-card-title">الانتقال من المادي إلى البشري</h4></div>
+              <p class="ed-card-text">أثبت الواقع أن تكديس المصانع والآلات وحده لا يصنع نهضة مستدامة، فتحوّل الاهتمام إلى الاستثمار المنهجي في الإنسان.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">مفهوم رأس المال البشري وكفاءة العمل</h4></div>
+              <p class="ed-card-text">مخزون المهارات والمعارف والخصائص التي ترفع كفاءة ساعات العمل؛ فساعة عمل مؤهل تعادل عدة ساعات من غير مدرب.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">٣</span><h4 class="ed-card-title">القياس على الاستثمار ومعالجة المشكلات</h4></div>
+              <p class="ed-card-text">استثمار الأفراد في التعليم يماثل شراء الشركات للآلات، ويعالج مشكلات هيكلية كهجرة الأدمغة واختلال الكفاءات.</p>
+            </div>
+          </div>
+
+          <div class="visual-panel anim d3" style="gap:14px;">
+            <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+              <button class="int-btn" id="hcOldBtn" onclick="toggleHCMorph(false)">النظرة التقليدية (مادي)</button>
+              <button class="int-btn active" id="hcNewBtn" onclick="toggleHCMorph(true)">النظرة الحديثة (بشري) ✦</button>
+            </div>
+
+            <div id="hcMorphCard" style="width:100%; background:var(--card-cream); border:2.2px solid var(--emerald); border-radius:16px; padding:22px; text-align:center; transition:all 0.4s ease;">
+              <div id="hcIcon" style="font-size:48px; margin-bottom:6px;">🧠✨</div>
+              <h4 id="hcMorphTitle" style="font-family:var(--font-display); font-size:28px; color:var(--forest-green);">رأس المال البشري: ثروة متجددة</h4>
+              <p id="hcMorphDesc" style="font-size:17px; font-weight:700; color:var(--ink-brown); margin-top:6px; line-height:1.6;">
+                تنمية المعارف والمهارات والقدرات الذهنية والصحية — يولّد الابتكار، ويعيد بناء البنية المادية من الصفر، ويضمن استدامة النمو.
+              </p>
+            </div>
+
+            <div style="width:100%; background:var(--forest-green); color:var(--card-cream); border-radius:12px; padding:12px 16px; text-align:center;">
+              <div style="font-size:13px; color:var(--gold-light); font-weight:800; margin-bottom:4px;">أبرز رواد مدرسة رأس المال البشري (أكثر من ٤ عقود)</div>
+              <div style="font-size:16px; font-weight:800;">ثيودور شولتز • غاري بيكر • هانسن • يعقوب مينسر • بلاوج</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d4">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">🖼️</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • لوحة توضيحية (ص 92–94)</div>
+              <div class="media-teaser-title">التحول من الصناعة المادية إلى المعرفة والابتكار</div>
+              <div class="media-teaser-sub">صورة بصرية عالية الدقة من ملفات الفريق تجسّد الانتقال من الآلات التقليدية إلى العقل البشري</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('img_ind_know')">عرض الوسائط في وضع ملء الشاشة 🎬</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d5">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text"><strong>معجزة ألمانيا واليابان بعد الحرب العالمية الثانية:</strong> رغم تدمير المصانع والبنية المادية، استعادت الدولتان ريادتهما الاقتصادية سريعاً لأن ثروتهما الحقيقية كانت كامنة في عقول مهندسيهما وعمالهما المدربين الذين أعادوا البناء من الصفر.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 10: SCHULTZ (145px PORTRAIT) + BRIDGE (OLD SLIDE 9 — NO VIDEO)
+           ========================================================= -->
+      <section class="slide" data-title="رؤية ثيودور شولتز ومشكلة فشل التنسيق" data-notes="قدّم ثيودور شولتز تشخيصاً عميقاً لمفارقة نراها كثيراً في المجتمعات: لماذا توجد بطالة بين حملة الشهادات؟ يؤكد شولتز أن الخلل ليس في جدوى التعليم، بل في 'فشل التنسيق' بين ما تُخرّجه الجامعات وما يحتاجه سوق العمل فعلياً، مما يهدر أثمن ثروة وطنية. ويمكننا عرض لوحة ردم الفجوة لتأكيد هذا الأثر قبل الانتقال لنموذج روبرت لوكاس.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ١٠</span> المحور الثاني • إسهامات ثيودور شولتز</div>
+          <h2 class="slide-title">رؤية ثيودور شولتز ومشكلة «فشل التنسيق»</h2>
+          <h3 class="slide-subtitle">تفسير الفجوات التنموية بين الأمم وجذور إهدار الطاقات البشرية المتعلمة</h3>
+        </div>
+
+        <div class="split-2">
+          <div class="cards-stack anim d2">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">١</span><h4 class="ed-card-title">الإنسان ثروة وطنية واستثمار مستدام</h4></div>
+              <p class="ed-card-text">البشر هم الثروة الحقيقية للأمم، والتفاوت في الاستثمار المستدام برأس المال البشري يفسر فجوات الدخل بين الدول المتقدمة والنامية.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">٢</span><h4 class="ed-card-title">إهدار رأس المال البشري بالبطالة</h4></div>
+              <p class="ed-card-text">يتعطل رأس المال البشري ويفقد قيمته الاقتصادية عند تفشي البطالة الفائضة بين المتعلمين وبقاء كفاءاتهم غير مستغلة.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">٣</span><h4 class="ed-card-title">تفسير البطالة عبر «نهج فشل التنسيق»</h4></div>
+              <p class="ed-card-text">تنشأ البطالة ليس لعدم جدوى التعليم، بل لغياب التوافق والتنسيق الفعال بين مخرجات سياسة التعليم والاحتياجات المتجددة لسوق العمل.</p>
+            </div>
+          </div>
+
+          <div class="visual-panel anim d3" style="gap:14px;">
+            <div style="display:flex; align-items:center; gap:18px; width:100%;">
+              <div class="portrait-wrap">
+                <img src="images/theodore-schultz.jpg" alt="ثيودور شولتز" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="portrait-fallback" style="display:none;">ش</div>
+              </div>
+              <div>
+                <div style="font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--forest-green);">ثيودور دبليو شولتز</div>
+                <div style="font-size:15px; font-weight:800; color:var(--emerald);">جائزة نوبل في الاقتصاد • رائد رأس المال البشري</div>
+                <div style="font-size:14.5px; font-weight:600; color:var(--ink-muted); margin-top:4px;">«ثروة الأمم الحقيقية تكمن في قدرات مواطنيها لا في أصولها الجامدة»</div>
+              </div>
+            </div>
+
+            <svg viewBox="0 0 380 120" style="max-height:190px;" id="bridgeSvg">
+              <g class="bridge-half bridge-right">
+                <rect x="216" y="40" width="150" height="38" rx="8" fill="#1A3A22"/>
+                <text x="291" y="64" text-anchor="middle" fill="#FAF5E8" font-family="Cairo" font-size="14" font-weight="800">المؤسسات التعليمية</text>
+              </g>
+              <g class="bridge-half bridge-left">
+                <rect x="14" y="40" width="150" height="38" rx="8" fill="#2E6B3E"/>
+                <text x="89" y="64" text-anchor="middle" fill="#FAF5E8" font-family="Cairo" font-size="14" font-weight="800">سوق العمل الحقيقي</text>
+              </g>
+              <g id="bridgeWarn">
+                <circle cx="190" cy="59" r="18" fill="#B88B4A"/>
+                <text x="190" y="66" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="20" font-weight="900">!</text>
+                <text x="190" y="106" text-anchor="middle" fill="#3B220B" font-family="Cairo" font-size="13.5" font-weight="800">فجوة «فشل التنسيق» ← بطالة وإهدار للطاقات</text>
+              </g>
+              <text id="bridgeOkText" x="190" y="106" text-anchor="middle" fill="#2E6B3E" font-family="Cairo" font-size="14" font-weight="800" style="opacity:0;">✓ جسر التكامل: تعليم متوافق مع سوق العمل (نموذج سنغافورة ٤٠٪)</text>
+            </svg>
+
+            <button class="int-btn" id="bridgeToggleBtn" onclick="toggleBridge()">⚡ ردم الفجوة وتفعيل التنسيق</button>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d4">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">🖼️</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • لوحة بصرية (ص 92–94)</div>
+              <div class="media-teaser-title">لوحة ردم الفجوة بين التعليم وسوق العمل (نهج فشل التنسيق)</div>
+              <div class="media-teaser-sub">رسم توضيحي يبرز كيفية مواءمة مخرجات التعليم مع احتياجات السوق المتجددة</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('img_bridge_gap')">عرض اللوحة في وضع ملء الشاشة 🖼️</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d5">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">تخريج آلاف الطلاب في تخصصات نظرية متشبعة مقابل عجز الشركات في فنيي الطاقة المتجددة والذكاء الاصطناعي يجسد <strong>فشل التنسيق</strong>؛ وفي المقابل خصصت <strong>سنغافورة 40%</strong> من ميزانيتها للتعليم المرتبط بالسوق فقفزت لصدارة الاقتصادات العالمية.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 11: ROBERT LUCAS + ILLUSTRATION TEASER
+           ========================================================= -->
+      <section class="slide" data-title="نموذج روبرت لوكاس: مصادر تراكم رأس المال البشري" data-notes="نقل روبرت لوكاس نظرية رأس المال البشري إلى قلب معادلات النمو الاقتصادي الحديث؛ فأوضح أن المعرفة تتراكم عبر جناحين متكاملين: مقاعد الدراسة النظامية، وميدان الممارسة العملية، والأجمل أن هذا التراكم يولّد أثراً إيجابياً معدياً يرفع إنتاجية المحيطين بالمتعلم. وبعد أن عرفنا كيف يتراكم رأس المال البشري عند لوكاس، دعونا نتعرف على الأشكال العملية للاستثمار في التعليم كما صنفها غاري بيكر.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ١١</span> المحور الثاني • نموذج النمو الداخلي لروبرت لوكاس</div>
+          <h2 class="slide-title">نموذج روبرت لوكاس: مصادر تراكم رأس المال البشري</h2>
+          <h3 class="slide-subtitle">تجاوز نموذج سولو الكلاسيكي الجديد بدمج التعليم والممارسة والأثر المعرفي المتبادل</h3>
+        </div>
+
+        <div class="split-2 reverse">
+          <div class="visual-panel anim d2" style="gap:12px;">
+            <svg viewBox="0 0 400 220" style="max-height:300px;">
+              <ellipse cx="200" cy="110" rx="178" ry="88" fill="none" stroke="#B88B4A" stroke-width="3.2" stroke-dasharray="11 7" class="orbit-dash"/>
+              <rect x="86" y="6" width="228" height="30" rx="15" fill="#B88B4A"/>
+              <text x="200" y="26" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="13" font-weight="800">العوامل الخارجية الإيجابية (انتشار الخبرة)</text>
+              <rect x="212" y="58" width="152" height="104" rx="14" fill="#FAF5E8" stroke="#1A3A22" stroke-width="2.2"/>
+              <text x="288" y="88" text-anchor="middle" font-size="26">📚</text>
+              <text x="288" y="118" text-anchor="middle" fill="#1A3A22" font-family="Cairo" font-size="15.5" font-weight="800">التعليم النظامي</text>
+              <text x="288" y="142" text-anchor="middle" fill="#5C4024" font-family="Cairo" font-size="12.5" font-weight="700">المدارس والجامعات</text>
+              <circle cx="200" cy="110" r="17" fill="#2E6B3E"/>
+              <text x="200" y="117" text-anchor="middle" fill="#fff" font-size="22" font-weight="900">+</text>
+              <rect x="36" y="58" width="152" height="104" rx="14" fill="#FAF5E8" stroke="#2E6B3E" stroke-width="2.2"/>
+              <text x="112" y="88" text-anchor="middle" font-size="26">⚙️</text>
+              <text x="112" y="118" text-anchor="middle" fill="#1A3A22" font-family="Cairo" font-size="15.5" font-weight="800">التعلم بالممارسة</text>
+              <text x="112" y="142" text-anchor="middle" fill="#5C4024" font-family="Cairo" font-size="12.5" font-weight="700">التطبيق العملي والإتقان</text>
+              <rect x="112" y="182" width="176" height="28" rx="14" fill="#1A3A22"/>
+              <text x="200" y="201" text-anchor="middle" fill="#FAF5E8" font-family="Cairo" font-size="13" font-weight="800">نمو اقتصادي داخلي مستدام</text>
+            </svg>
+            <table class="mini-table">
+              <thead><tr><th>نموذج سولو الكلاسيكي الجديد</th><th>نموذج روبرت لوكاس الداخلي</th></tr></thead>
+              <tbody><tr><td>تقدم تكنولوجي <strong>خارجي</strong> عن النموذج</td><td>تراكم رأس المال البشري كعامل <strong>داخلي</strong></td></tr></tbody>
+            </table>
+          </div>
+
+          <div class="cards-stack anim d3">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">١</span><h4 class="ed-card-title">البديل الداخلي لنموذج سولو</h4></div>
+              <p class="ed-card-text">خلافاً لنموذج سولو الذي افترض التكنولوجيا عاملاً خارجياً، أثبت لوكاس أن التراكم المستمر لرأس المال البشري هو المحرك الداخلي للنمو.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">التعليم النظامي والتعلم بالممارسة</h4></div>
+              <p class="ed-card-text">يتراكم رأس المال البشري بمصدرين متكاملين: الدراسة المنهجية في المدارس والجامعات، وصقل المهارات بالتطبيق العملي أثناء العمل.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">٣</span><h4 class="ed-card-title">العوامل الخارجية الإيجابية</h4></div>
+              <p class="ed-card-text">ارتفاع تعليم الفرد لا يرفع إنتاجيته الشخصية وحدها، بل ينعكس إيجاباً على زملائه والمجتمع عبر تبادل الأفكار والخبرات.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d4">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">🖼️</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • لوحة توضيحية (ص 92–94)</div>
+              <div class="media-teaser-title">مصدرا تراكم رأس المال البشري والتفاعل الإيجابي عند روبرت لوكاس</div>
+              <div class="media-teaser-sub">رسم توضيحي ملون يبرز التكامل الدائري بين التعليم الأكاديمي والتطبيق الميداني</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('img_lucas')">عرض الوسائط في وضع ملء الشاشة 🎬</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d5">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">مبرمج يتعلم هندسة البرمجيات بالجامعة (<strong>تعليم نظامي</strong>)، ثم يصقل مهاراته بحل مشكلات معقدة أثناء العمل (<strong>تعلم بالممارسة</strong>)، وعندما ينقل خبرته لزملائه الجدد ترتفع إنتاجية الشركة بأكملها (<strong>عوامل خارجية إيجابية</strong>).</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 12: GARY BECKER + ILLUSTRATION TEASER
+           ========================================================= -->
+      <section class="slide" data-title="أشكال الاستثمار في التعليم وفقاً لغاري بيكر" data-notes="وسّع غاري بيكر أفق الاستثمار في التعليم ليشمل ثلاث دوائر متكاملة: التدريب داخل مكان العمل، والتعليم الأكاديمي المتخصص، والوعي بالأنظمة الاقتصادية والاجتماعية، وأخضع كل ذلك لأدوات التحليل الاقتصادي التي توازن بين التكلفة والعائد. غير أن هذه النظرة الاقتصادية البحتة لرأس المال البشري واجهت نقداً إنسانياً عميقاً فتح الباب أمام مفهوم أرحب هو 'التنمية البشرية'؛ فلنتعرف عليه الآن.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ١٢</span> المحور الثاني • تصنيف غاري بيكر وتحليل التكلفة والعائد</div>
+          <h2 class="slide-title">أشكال الاستثمار في التعليم وفقاً لغاري بيكر</h2>
+          <h3 class="slide-subtitle">ثلاثة مسارات متصاعدة لبناء القدرات البشرية وإخضاع التعليم لميزان التكاليف والفوائد</h3>
+        </div>
+
+        <div class="stair-grid anim d2">
+          <div class="stair-card stair-1 focusable-card">
+            <div class="ed-card-head"><span class="num-badge">١</span><h4 class="ed-card-title">التعليم والتدريب أثناء العمل</h4></div>
+            <p class="ed-card-text">تدريب مباشر داخل بيئة العمل الفعلية لرفع إنتاجية العامل مستقبلاً؛ يمثل استثماراً تطبيقياً داخل المؤسسة الإنتاجية نفسها.</p>
+            <div style="margin-top:10px; font-size:14.5px; font-weight:800; color:var(--emerald);">🏢 خطوط الإنتاج والمكاتب</div>
+          </div>
+          <div class="stair-card stair-2 focusable-card">
+            <div class="ed-card-head"><span class="num-badge gold">٢</span><h4 class="ed-card-title">التعليم المدرسي والأكاديمي</h4></div>
+            <p class="ed-card-text">يتم داخل مؤسسات متخصصة لإنتاج المعرفة، وتزداد فعاليته حين يقترن بتدريب عملي موازٍ أو تخصص أكاديمي طويل ومعمق.</p>
+            <div style="margin-top:10px; font-size:14.5px; font-weight:800; color:var(--gold);">🎓 المدارس والجامعات والمعاهد</div>
+          </div>
+          <div class="stair-card stair-3 focusable-card">
+            <div class="ed-card-head"><span class="num-badge">٣</span><h4 class="ed-card-title">المعرفة المجتمعية والاقتصادية</h4></div>
+            <p class="ed-card-text">اكتساب الوعي بالأنظمة الاقتصادية والاجتماعية والمؤسسية في المجتمع، مما يساعد الأفراد على اتخاذ قرارات رشيدة تنمّي دخلهم الحقيقي.</p>
+            <div style="margin-top:12px; background:var(--example-bg); padding:10px 14px; border-radius:10px; font-size:15px; font-weight:800; color:var(--forest-green);">
+              ⚖️ <strong>التحليل الاقتصادي:</strong> موازنة الرسوم والوقت مقابل الدخل الأعلى والفرص الأفضل للفرد والمجتمع.
+            </div>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d3">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">🖼️</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • لوحة بصرية (ص 92–94)</div>
+              <div class="media-teaser-title">إنفوجرافيك أشكال الاستثمار الثلاثة في التعليم عند غاري بيكر</div>
+              <div class="media-teaser-sub">عرض مرئي متكامل للمسارات الثلاثة: التدريب أثناء العمل، التعليم المدرسي، والمعرفة المجتمعية</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('img_becker')">عرض الوسائط في وضع ملء الشاشة 🎬</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d4">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">شركة تنظم ورشاً لموظفيها على الإدارة الرقمية (<strong>أثناء العمل</strong>)، وكلية تربية تجمع المحاضرات بالتربية العملية (<strong>مدرسي مقترن بتدريب</strong>)، ومواطن يتثقف بقوانين الاستثمار والضرائب ليدير مدخراته (<strong>معرفة اقتصادية ومجتمعية</strong>).</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 13: AMARTYA SEN (145px PORTRAIT) + SCALE (OLD SLIDE 12 — NO VIDEO)
+           ========================================================= -->
+      <section class="slide" data-title="نقد رأس المال البشري ورؤية أمارتيا سين للتنمية البشرية" data-notes="رغم الإسهامات الجليلة لنظرية رأس المال البشري، فإنها وقعت في قصور جوهري حين اختزلت الإنسان في كونه ترساً في آلة الإنتاج. وهنا أحدث أمارتيا سين ثورة فكرية بإعادة الاعتبار للإنسان بوصفه غاية التنمية لا وسيلتها، فصاغ مفهوم 'التنمية كحرية' ومنهج 'القدرات'. ولكي لا تبقى هذه الرؤية مجرد فلسفة نظرية، تُرجمت عملياً إلى مؤشر عالمي شهير نعرضه في الشريحة التالية.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ١٣</span> المحور الثاني • الانتقال نحو التنمية البشرية</div>
+          <h2 class="slide-title">نقد نظرية رأس المال البشري ورؤية أمارتيا سين</h2>
+          <h3 class="slide-subtitle">من النظر إلى الإنسان كأداة لزيادة الإنتاج إلى تمكينه وتوسيع حريته وقدراته بوصفه غاية التنمية</h3>
+        </div>
+
+        <div class="split-2">
+          <div class="cards-stack anim d2">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">١</span><h4 class="ed-card-title">القصور الجوهري لرأس المال البشري</h4></div>
+              <p class="ed-card-text">نظرت للإنسان كوسيلة لزيادة الإنتاجية والدخل، وتجاهلت ضرورة تمكينه الشامل ومشاركته الفعالة وتكامل الدخل والصحة والتعليم.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">نقد الاكتفاء بالناتج المحلي (GDP)</h4></div>
+              <p class="ed-card-text">أوضح أمارتيا سين (نوبل في الاقتصاد) أن الأموال والدخل القومي مجرد <strong>«وسيلة»</strong> وليست <strong>«غاية»</strong> في ذاتها لقياس تقدم الأمم.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٣</span><h4 class="ed-card-title">التنمية كحرية ومفهوم القدرات (Capabilities)</h4></div>
+              <p class="ed-card-text">التنمية هي توسيع خيارات البشر وقدراتهم: العبرة ليست بحجم المال بل بحرية التعلم، والرعاية الصحية، والمشاركة المجتمعية.</p>
+            </div>
+          </div>
+
+          <div class="visual-panel anim d3" style="gap:12px;">
+            <div style="display:flex; align-items:center; gap:18px; width:100%;">
+              <div class="portrait-wrap">
+                <img src="images/amartya-sen.jpg" alt="أمارتيا سين" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="portrait-fallback" style="display:none;">س</div>
+              </div>
+              <div>
+                <div style="font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--forest-green);">أمارتيا سين (Amartya Sen)</div>
+                <div style="font-size:15px; font-weight:800; color:var(--emerald);">نوبل في الاقتصاد • مؤسس منهج القدرات</div>
+                <div style="font-size:14.5px; font-weight:600; color:var(--ink-muted); margin-top:4px;">«الإنسان هو محور التنمية وغايتها، لا ترساً في آلة الإنتاج»</div>
+              </div>
+            </div>
+
+            <svg viewBox="0 0 320 135" style="max-height:185px;">
+              <polygon points="150,126 170,126 163,62 157,62" fill="#B88B4A"/>
+              <rect x="120" y="124" width="80" height="8" rx="4" fill="#3B220B"/>
+              <g id="senScaleBeam" class="scale-beam" style="transform: rotate(-10deg);">
+                <line x1="42" y1="62" x2="278" y2="62" stroke="#1A3A22" stroke-width="4.5" stroke-linecap="round"/>
+                <line x1="256" y1="62" x2="256" y2="90" stroke="#B88B4A" stroke-width="2.2"/>
+                <rect x="204" y="88" width="104" height="32" rx="8" fill="#FAF5E8" stroke="#5C4024" stroke-width="2"/>
+                <text x="256" y="109" text-anchor="middle" fill="#3B220B" font-family="Cairo" font-size="12.5" font-weight="800">GDP (وسيلة)</text>
+                <line x1="64" y1="62" x2="64" y2="90" stroke="#B88B4A" stroke-width="2.2"/>
+                <rect x="8" y="88" width="116" height="34" rx="8" fill="#2E6B3E"/>
+                <text x="66" y="110" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="12.5" font-weight="800">القدرات والحرية</text>
+              </g>
+              <circle cx="160" cy="62" r="6.5" fill="#B88B4A"/>
+            </svg>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+              <button class="int-btn" onclick="tiltSenScale(10)">النظرة الضيقة (الدخل)</button>
+              <button class="int-btn active" onclick="tiltSenScale(-10)">رؤية سين (القدرات والحرية) ✦</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d4">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">🖼️</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • لوحة نقدية بصرية (ص 94–95)</div>
+              <div class="media-teaser-title">ميزان تمكين الإنسان مقابل الإنتاج المادي (رؤية أمارتيا سين)</div>
+              <div class="media-teaser-sub">لوحة توضيحية تبرز الفارق بين الثروة المالية والقدرات البشرية الحقيقية</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('img_sen_scale')">عرض اللوحة في وضع ملء الشاشة 🖼️</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d5">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">إذا امتلك شخصان المبلغ المالي نفسه؛ الأول <strong>متعلم وواعٍ صحياً</strong> فيستثمره في مشروع وتطوير مهاراته ورعاية أسرته، بينما الثاني <strong>أميّ</strong> يفتقر للخدمات فتظل خياراته محدودة؛ فالمال وحده لا يصنع التنمية دون قدرات.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 14: HDI TRIANGLE (OLD SLIDE 13 — NO VIDEO)
+           ========================================================= -->
+      <section class="slide" data-title="مؤشر التنمية البشرية (HDI) ومحورية التعليم" data-notes="في عام 1990، جسّد مؤشر التنمية البشرية رؤية سين ومحبوب الحق في ثلاثة أبعاد متكافئة: الصحة، والمعرفة، ومستوى المعيشة. واللافت أن التعليم ليس مجرد ضلع واحد في هذا المثلث، بل هو المحرك الخفي للضلعين الآخرين؛ كما تؤكد إحصائية تعليم الفتيات التي ترفع الدخل بنسبة 15 إلى 25% وتنقذ أرواح الأطفال. وبعد أن استوعبنا البعد الإنساني للتعليم، لننتقل إلى المنهج الثالث في الترابط المتبادل: دراسات عوائد الاستثمار في التعليم بموجتيها الأولى والثانية.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ١٤</span> المحور الثاني • مؤشر التنمية البشرية (UNDP – 1990)</div>
+          <h2 class="slide-title">مؤشر التنمية البشرية (HDI) ومحورية التعليم</h2>
+          <h3 class="slide-subtitle">انقر على أي ركن في مثلث المؤشر لاكتشاف طريقة قياسه وكيف يشكّل التعليم المحرك الخفي له</h3>
+        </div>
+
+        <div class="split-2 reverse">
+          <div class="visual-panel anim d2">
+            <svg viewBox="0 0 380 235" style="max-height:270px;">
+              <polygon points="190,26 48,205 332,205" fill="rgba(229, 239, 224, 0.62)" stroke="#B88B4A" stroke-width="3"/>
+              <line x1="190" y1="136" x2="190" y2="56" stroke="#2E6B3E" stroke-width="2.6" stroke-dasharray="5 3"/>
+              <line x1="190" y1="136" x2="80" y2="190" stroke="#2E6B3E" stroke-width="2.6" stroke-dasharray="5 3"/>
+              <line x1="190" y1="136" x2="300" y2="190" stroke="#2E6B3E" stroke-width="2.6" stroke-dasharray="5 3"/>
+              <circle cx="190" cy="136" r="38" fill="#2E6B3E"/>
+              <text x="190" y="132" text-anchor="middle" fill="#FAF5E8" font-family="Cairo" font-size="14.5" font-weight="900">التعليم</text>
+              <text x="190" y="150" text-anchor="middle" fill="#D5AF72" font-family="Cairo" font-size="11.5" font-weight="800">المحرك الخفي</text>
+
+              <g class="hdi-vertex" onclick="selectHDI('edu')">
+                <circle cx="190" cy="30" r="27" fill="#1A3A22" stroke="#B88B4A" stroke-width="2.8"/>
+                <text x="190" y="35" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="13" font-weight="800">المعرفة</text>
+              </g>
+              <g class="hdi-vertex" onclick="selectHDI('health')">
+                <circle cx="328" cy="200" r="27" fill="#1A3A22" stroke="#B88B4A" stroke-width="2.8"/>
+                <text x="328" y="205" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="13" font-weight="800">الصحة</text>
+              </g>
+              <g class="hdi-vertex" onclick="selectHDI('income')">
+                <circle cx="52" cy="200" r="27" fill="#1A3A22" stroke="#B88B4A" stroke-width="2.8"/>
+                <text x="52" y="205" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="13" font-weight="800">الدخل</text>
+              </g>
+            </svg>
+            <div class="mm-active-box" id="hdiInfoBox">
+              <strong style="color:var(--emerald); font-size:15.5px;">البعد المعرفي / التعليمي (متساوي الوزن):</strong>
+              <p style="font-size:15px; font-weight:600; color:var(--ink-brown); margin-top:4px;">يُقاس بمتوسط سنوات الدراسة للبالغين (25+ سنة) وسنوات الدراسة المتوقعة للأطفال عند دخول المدرسة، وهو المفتاح الذهبي لرفع الصحة والدخل.</p>
+            </div>
+          </div>
+
+          <div class="cards-stack anim d3">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">١</span><h4 class="ed-card-title">نشأة مؤشر HDI عام ١٩٩٠</h4></div>
+              <p class="ed-card-text">أطلقه برنامج الأمم المتحدة الإنمائي (UNDP) بناءً على أفكار <strong>أمارتيا سين</strong> و<strong>محبوب الحق</strong> كبديل أشمل من الناتج المحلي.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">الأبعاد الثلاثة المتساوية في الوزن</h4></div>
+              <p class="ed-card-text">حياة مديدة وصحية (متوسط العمر)، واكتساب المعرفة (سنوات الدراسة)، ومستوى معيشي لائق (نصيب الفرد من الدخل القومي GNI).</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٣</span><h4 class="ed-card-title">أثر التعليم على الصحة والدخل والتمكين</h4></div>
+              <p class="ed-card-text">يرفع المهارة والدخل، ويخفض تعليم الأمهات وفيات الأطفال، ويمنح الإنسان التفكير النقدي ومعرفة حقوقه وحرية الاختيار.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="example-box anim d4">
+          <span class="example-tag">إحصائية ومقارنة</span>
+          <p class="example-text">في الدول النامية، كل سنة إضافية للفتاة في التعليم الثانوي ترفع دخلها المستقبلي بنسبة <strong>15% إلى 25%</strong> وتقلل وفيات الأطفال؛ كما تتفوق <strong>كوريا الجنوبية وفنلندا</strong> في HDI على دول نفطية عالية الدخل تعاني من الأمية.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 15: INVESTMENT IN EDUCATION & WAVE 1 + LOCAL VIDEO
+           ========================================================= -->
+      <section class="slide" data-title="الاستثمار في التعليم: الآثار الخارجية والموجة الأولى" data-notes="حين ننتقل إلى نهج عوائد الاستثمار في التعليم، نجد أن الأدبيات الاقتصادية انقسمت إلى موجتين تاريخيتين مدعومتين بدراسات تجريبية رائدة عامي 1973 و1981. ورغم إشارة ستيجليتز إلى أن التعليم ليس منفعة عامة خالصة، إلا أن آثاره الإيجابية تفيض على المجتمع كله. لنشاهد فيديو رأس المال البشري والاستثمار في التعليم قبل الانتقال لاقتصاد المعرفة.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ١٥</span> المحور الثالث • عوائد الاستثمار في التعليم</div>
+          <h2 class="slide-title">الاستثمار في التعليم: الآثار الخارجية والموجة الأولى</h2>
+          <h3 class="slide-subtitle">الجذور التجريبية لتحليل عوائد التعليم وتأثير رواد الموجة الأولى (شولتز وبيكر) على الإنتاجية والسياسات</h3>
+        </div>
+
+        <div class="visual-panel anim d2" style="padding:10px 18px;">
+          <svg viewBox="0 0 840 108" style="max-height:110px;">
+            <path d="M 20 76 Q 170 10, 340 60 T 820 44" fill="none" stroke="#2E6B3E" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M 20 88 Q 210 28, 410 72 T 820 58" fill="none" stroke="#B88B4A" stroke-width="2.6" stroke-dasharray="7 5"/>
+            <circle cx="690" cy="50" r="10" fill="#1A3A22"/>
+            <text x="690" y="24" text-anchor="middle" fill="#1A3A22" font-family="Cairo" font-size="14.5" font-weight="800">الموجة الأولى (الخمسينيات)</text>
+            <text x="690" y="96" text-anchor="middle" fill="#5C4024" font-family="Cairo" font-size="12.5" font-weight="700">شولتز وبيكر — التأسيس النظري</text>
+
+            <circle cx="430" cy="58" r="9" fill="#B88B4A"/>
+            <text x="430" y="24" text-anchor="middle" fill="#B88B4A" font-family="Cairo" font-size="14.5" font-weight="800">دراسات تجريبية ١٩٧٣ و١٩٨١</text>
+            <text x="430" y="96" text-anchor="middle" fill="#5C4024" font-family="Cairo" font-size="12.5" font-weight="700">توسعت لتشمل ١٣ دولة إضافية</text>
+
+            <circle cx="160" cy="48" r="10" fill="#2E6B3E"/>
+            <text x="160" y="24" text-anchor="middle" fill="#2E6B3E" font-family="Cairo" font-size="14.5" font-weight="800">الموجة الثانية (أوائل السبعينيات)</text>
+            <text x="160" y="96" text-anchor="middle" fill="#5C4024" font-family="Cairo" font-size="12.5" font-weight="700">يعقوب مينسر — القياس الكمي</text>
+          </svg>
+        </div>
+
+        <div class="cards-grid-2 anim d3">
+          <div class="ed-card focusable-card">
+            <div class="ed-card-head"><span class="num-badge gold">١</span><h4 class="ed-card-title">الآثار الخارجية النافعة (ستيجليتز)</h4></div>
+            <p class="ed-card-text">رغم أن التعليم لا يُصنف منفعة عامة خالصة وفق ستيجليتز، إلا أنه يولّد آثاراً جانبية نافعة للمجتمع بأسره يصعب قياسها أحياناً.</p>
+          </div>
+          <div class="ed-card focusable-card">
+            <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">الدراسات التجريبية وتقسيم الموجتين</h4></div>
+            <p class="ed-card-text">بدأت الدراسات التجريبية عام <strong>1973</strong> وتوسعت عام <strong>1981</strong> على <strong>13 دولة إضافية</strong>، لتنقسم الأدبيات بين الموجتين الأولى والثانية.</p>
+          </div>
+          <div class="ed-card focusable-card">
+            <div class="ed-card-head"><span class="num-badge">٣</span><h4 class="ed-card-title">تأثير التعليم على الإنتاجية</h4></div>
+            <p class="ed-card-text">أثبت شولتز وبيكر أن المتعلمين أقدر على التكيف السريع مع التقنيات الجديدة وتطبيقها بكفاءة، مما يضاعف إنتاجية العمل.</p>
+          </div>
+          <div class="ed-card focusable-card">
+            <div class="ed-card-head"><span class="num-badge gold">٤</span><h4 class="ed-card-title">التأثير في السياسات التعليمية</h4></div>
+            <p class="ed-card-text">دفعت الموجة الأولى الحكومات للنظر إلى التعليم كاستثمار استراتيجي ذي عائد اقتصادي، فزادت الإنفاق عليه ودعمت برامجه.</p>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d4">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">▶</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • فيديو محلي جاهز للتشغيل (ص 96–98)</div>
+              <div class="media-teaser-title">ما هو رأس المال البشري ولماذا يُعد أهم استثمار؟</div>
+              <div class="media-teaser-sub">فيديو قصير ومباشر من ملفات الفريق يربط مفهوم رأس المال البشري بالموجة الأولى</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('vid_hc_96')">عرض الوسائط في وضع ملء الشاشة 🎬</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d5">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">مصنع يُدخل تقنيات رقمية حديثة ويدرّب فريقه عليها؛ فتنتقل المهارة سريعاً بين العمال وترتفع سرعة الإنجاز وتقل الأخطاء، وتنتشر ثقافة الكفاءة والابتكار في البيئة المحيطة بالمصنع كأثر خارجي إيجابي.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 16: KNOWLEDGE ECONOMY + COGNITIVE OVERLAP VIDEO
+           ========================================================= -->
+      <section class="slide" data-title="الموجة الأولى وركائز اقتصاد المعرفة" data-notes="تمثل الموجة الأولى حجر الزاوية في 'اقتصاد المعرفة' الذي وصفه بول رومر بقدرته الفائقة على توليد المعرفة والمنتجات الجديدة. في هذا الاقتصاد، تنتقل القيمة من الحفظ والتكرار إلى التفكير النقدي وحل المشكلات والإبداع، مما يرفع دخل الأفراد وينعش الاقتصاد الكلي. يمكننا عرض فيديو التداخل الإدراكي لتعزيز فهم المهارات المعرفية قبل الانتقال للموجة الثانية مع يعقوب مينسر.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ١٦</span> المحور الثالث • الموجة الأولى واقتصاد المعرفة</div>
+          <h2 class="slide-title">الموجة الأولى وركائز «اقتصاد المعرفة»</h2>
+          <h3 class="slide-subtitle">كيف تحوّلت أسس رأس المال البشري إلى قاطرة للابتكار والمهارات المتقدمة والرفاه الاقتصادي؟</h3>
+        </div>
+
+        <div class="split-2">
+          <div class="cards-stack anim d2">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">١</span><h4 class="ed-card-title">رأسمالية المعرفة (رؤية بول رومر)</h4></div>
+              <p class="ed-card-text">يشير رومر إلى أن الاقتصاد القائم على المعرفة يخلق المعرفة ويكتسبها وينتج منتجات جديدة بسرعة وسهولة، مما يرفع الرفاهية والصحة.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">تطوير مهارات اقتصاد المعرفة</h4></div>
+              <p class="ed-card-text">لم يعد الحفظ كافياً؛ بل أصبحت مهارات <strong>التفكير النقدي وحل المشكلات والإبداع</strong> ركيزة للعمل في التكنولوجيا والبحث والتطوير.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">٣</span><h4 class="ed-card-title">رفع الدخل وتحديث المناهج الاستراتيجية</h4></div>
+              <p class="ed-card-text">يفتح التعليم وظائف بدخل أعلى تنشّط الاقتصاد الكلي، مما دفع الدول لزيادة الإنفاق وتطوير المناهج لمواكبة الذكاء الاصطناعي.</p>
+            </div>
+          </div>
+
+          <div class="visual-panel anim d3" style="gap:12px;">
+            <div style="font-weight:800; color:var(--forest-green); font-size:17.5px;">محرك الابتكار في اقتصاد المعرفة</div>
+            <svg viewBox="0 0 360 205" style="max-height:290px;">
+              <g class="gear-cw" style="transform-origin: 118px 80px;">
+                <circle cx="118" cy="80" r="52" fill="#E5EFE0" stroke="#2E6B3E" stroke-width="6" stroke-dasharray="11 6"/>
+                <circle cx="118" cy="80" r="38" fill="#2E6B3E"/>
+              </g>
+              <text x="118" y="77" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="13.5" font-weight="800">التفكير</text>
+              <text x="118" y="95" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="13.5" font-weight="800">النقدي</text>
+
+              <g class="gear-ccw" style="transform-origin: 234px 80px;">
+                <circle cx="234" cy="80" r="52" fill="#FAF5E8" stroke="#B88B4A" stroke-width="6" stroke-dasharray="11 6"/>
+                <circle cx="234" cy="80" r="38" fill="#B88B4A"/>
+              </g>
+              <text x="234" y="77" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="13.5" font-weight="800">حل</text>
+              <text x="234" y="95" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="13.5" font-weight="800">المشكلات</text>
+
+              <g class="gear-cw" style="transform-origin: 176px 156px;">
+                <circle cx="176" cy="156" r="40" fill="#E5EFE0" stroke="#1A3A22" stroke-width="6" stroke-dasharray="9 5"/>
+                <circle cx="176" cy="156" r="29" fill="#1A3A22"/>
+              </g>
+              <text x="176" y="161" text-anchor="middle" fill="#FAF5E8" font-family="Cairo" font-size="14" font-weight="800">الإبداع</text>
+            </svg>
+            <div style="background:var(--example-bg); padding:10px 16px; border-radius:10px; font-size:15px; font-weight:800; color:var(--forest-green); text-align:center; width:100%;">
+              المحصّلة: تقنيات جديدة ← إنتاجية أعلى ← تنافسية عالمية
+            </div>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d4">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">▶</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • فيديو محلي جاهز للتشغيل (ص 96–98)</div>
+              <div class="media-teaser-title">التداخل الإدراكي والمهارات الذهنية في اقتصاد المعرفة</div>
+              <div class="media-teaser-sub">عرض مرئي من ملفات الفريق يوضح كيف تُبنى المهارات الإدراكية وحل المشكلات</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('vid_cognitive')">عرض الوسائط في وضع ملء الشاشة 🎬</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d5">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">طالب هندسة أو برمجة يتقن التفكير النقدي وحل المشكلات المعقدة بدلاً من حفظ الأكواد، فيعمل بفرق البحث والتطوير ويبتكر تطبيقات ترفع تنافسية شركته وتنقل دخله ومستوى معيشة أسرته لمستوى أعلى.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 17: WAVE 2 & MINCER + CRAFTSMAN VS PROFESSIONAL VIDEO
+           ========================================================= -->
+      <section class="slide" data-title="الموجة الثانية: القياس الكمي ونموذج مينسر للأرباح" data-notes="في أوائل السبعينيات، أحدث يعقوب مينسر تحولاً منهجياً كبيراً بإطلاق الموجة الثانية؛ حيث أدخل الأدوات الإحصائية والقياس الكمي عبر 'نموذج مينسر للأرباح' ليحسب بدقة كم يضيف كل عام دراسي جديد إلى دخل الفرد واستقراره الوظيفي. ويمكننا استعراض فيديو الفرق بين الصنايعي والمهني لتوضيح أثر التأهيل المعرفي على القيمة السوقية والاستقرار الوظيفي.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ١٧</span> المحور الثالث • الموجة الثانية للقياس الكمي (أوائل السبعينيات)</div>
+          <h2 class="slide-title">الموجة الثانية: القياس الكمي ونموذج مينسر للأرباح</h2>
+          <h3 class="slide-subtitle">اختر المرحلة التعليمية في الرسم البياني لاستكشاف أثر سنوات التعليم على الأجور والاستقرار الوظيفي</h3>
+        </div>
+
+        <div class="split-2 reverse">
+          <div class="visual-panel anim d2" style="gap:10px;">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
+              <button class="int-btn" id="mStage0" onclick="selectMincer(0)">تعليم أساسي</button>
+              <button class="int-btn active" id="mStage1" onclick="selectMincer(1)">شهادة جامعية</button>
+              <button class="int-btn gold-btn" id="mStage2" onclick="selectMincer(2)">دراسات عليا ✦</button>
+            </div>
+            <svg viewBox="0 0 380 195" style="max-height:270px;">
+              <line x1="42" y1="162" x2="356" y2="162" stroke="#3B220B" stroke-width="2"/>
+              <line x1="42" y1="18" x2="42" y2="162" stroke="#3B220B" stroke-width="2"/>
+              <path d="M 52 146 Q 186 118, 332 32" fill="none" stroke="#2E6B3E" stroke-width="4.5" stroke-linecap="round"/>
+              <circle cx="100" cy="135" r="7" fill="#B88B4A" opacity="0.55"/>
+              <circle cx="210" cy="99" r="7" fill="#B88B4A" opacity="0.55"/>
+              <circle cx="322" cy="38" r="7" fill="#B88B4A" opacity="0.55"/>
+              <g id="mincerMarker" style="transition: transform 0.55s cubic-bezier(0.22,1,0.36,1); transform: translate(210px, 99px);">
+                <circle r="15" fill="rgba(46, 107, 62, 0.24)"/>
+                <circle r="8" fill="#1A3A22" stroke="#FAF5E8" stroke-width="2.8"/>
+              </g>
+              <text x="200" y="186" text-anchor="middle" fill="#3B220B" font-family="Cairo" font-size="13.5" font-weight="800">عدد سنوات التعليم</text>
+              <text x="18" y="92" text-anchor="middle" fill="#3B220B" font-family="Cairo" font-size="13.5" font-weight="800" transform="rotate(-90 18 92)">الدخل المتوقع</text>
+            </svg>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%;">
+              <div style="background:var(--card-cream); padding:10px 12px; border-radius:10px; border:1.4px solid rgba(184,139,74,0.45); text-align:center;">
+                <div style="font-size:13px; color:var(--ink-muted); font-weight:700;">مؤشر الدخل المتوقع</div>
+                <div id="mincerInc" style="font-size:18px; font-weight:900; color:var(--emerald);">مرتفع (+ تنافسية)</div>
+              </div>
+              <div style="background:var(--card-cream); padding:10px 12px; border-radius:10px; border:1.4px solid rgba(184,139,74,0.45); text-align:center;">
+                <div style="font-size:13px; color:var(--ink-muted); font-weight:700;">الاستقرار الوظيفي</div>
+                <div id="mincerStab" style="font-size:18px; font-weight:900; color:var(--gold);">استقرار قوي</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cards-stack anim d3">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">١</span><h4 class="ed-card-title">نقطة التحول مع يعقوب مينسر</h4></div>
+              <p class="ed-card-text">انطلقت الموجة الثانية بأوائل السبعينيات مع كتاب يعقوب مينسر (المكتب الوطني للبحوث الاقتصادية)، ناقلة التحليل إلى القياس الكمي الدقيق.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">نموذج مينسر للأرباح والأدوات الإحصائية</h4></div>
+              <p class="ed-card-text">تعتمد على بيانات الأجور والشهادات لتقدير العائد المالي السنوي، وأثبت النموذج <strong>علاقة إيجابية واضحة</strong> بين سنوات التعليم والدخل.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">٣</span><h4 class="ed-card-title">التنافسية والاستقرار في سوق العمل</h4></div>
+              <p class="ed-card-text">يمتلك أصحاب المستويات التعليمية الأعلى فرصاً أكبر لوظائف ذات أجور أعلى واستقرار وظيفي أفضل عند تقلبات السوق.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d4">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">▶</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • فيديو محلي جاهز للتشغيل (ص 98–100)</div>
+              <div class="media-teaser-title">الفرق بين الصنايعي والمهني — أثر التأهيل المعرفي على سوق العمل</div>
+              <div class="media-teaser-sub">تطبيق واقعي من ملفات الفريق يبرز كيف يرفع التأهيل الأكاديمي والمهني القيمة السوقية للعامل</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('vid_pro')">عرض الوسائط في وضع ملء الشاشة 🎬</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d5">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">بدلاً من القول العام «التعليم يزيد الدخل»، يجمع الباحثون بيانات آلاف العاملين لمقارنة أجر التعليم الأساسي مقابل الجامعي والدراسات العليا لحساب نسبة الزيادة المئوية في الأجر لكل سنة دراسية إضافية.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 18: SOCIAL RETURNS (OLD SLIDE 17 — NO VIDEO)
+           ========================================================= -->
+      <section class="slide" data-title="العوائد الاجتماعية للتعليم وتوسيع النطاق العالمي" data-notes="أثبتت الموجة الثانية بالأرقام أن التعليم ليس مكسباً فردياً أنانياً، بل استثمار في أمن المجتمع واستقراره؛ فهو يقلل الجريمة، ويعزز المشاركة المدنية، ويساعد الحكومات في الدول النامية والمتقدمة على توجيه ميزانياتها نحو الفئات الأكثر احتياجاً. واليوم، وفي مواجهة التحديات المناخية واستنزاف الموارد، انتقل هذا القياس الكمي ليخدم أفقاً تنموياً جديداً يقودنا إلى المحور الأخير: الاقتصاد الأخضر.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ١٨</span> المحور الثالث • العوائد الاجتماعية ضمن الموجة الثانية</div>
+          <h2 class="slide-title">العوائد الاجتماعية للتعليم وتوسيع النطاق العالمي</h2>
+          <h3 class="slide-subtitle">كيف أثبتت البيانات الكمية أن التعليم استثمار في مستقبل المجتمع بأكمله لا الفرد وحده؟</h3>
+        </div>
+
+        <div class="split-2">
+          <div class="cards-stack anim d2">
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">١</span><h4 class="ed-card-title">تجاوز المكاسب الفردية للمجتمع كله</h4></div>
+              <p class="ed-card-text">لم تكتفِ الموجة الثانية بحساب الدخل والوظيفة للفرد، بل أثبتت بالإحصاء والنماذج الكمية تحقيق فوائد عامة للمجتمع بأسره.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">خفض الجريمة وتعزيز المشاركة المدنية</h4></div>
+              <p class="ed-card-text">الحد من التسرب الدراسي والبطالة يخفض معدلات الجريمة، ويرفع الإقبال على العمل التطوعي والانتخابات والالتزام بالقانون.</p>
+            </div>
+            <div class="ed-card focusable-card">
+              <div class="ed-card-head"><span class="num-badge gold">٣</span><h4 class="ed-card-title">شمول الدول النامية وتوجيه السياسات</h4></div>
+              <p class="ed-card-text">توسعت الدراسات للدول النامية بجانب المتقدمة، واستعانت الحكومات والمنظمات الدولية بالبيانات لتوجيه الميزانيات وتحسين جودة التعليم.</p>
+            </div>
+          </div>
+
+          <div class="visual-panel anim d3">
+            <svg viewBox="0 0 360 270" style="max-height:330px;">
+              <circle cx="180" cy="135" r="122" fill="rgba(46, 107, 62, 0.11)" stroke="#2E6B3E" stroke-width="2.5" stroke-dasharray="7 4"/>
+              <text x="180" y="34" text-anchor="middle" fill="#1A3A22" font-family="Cairo" font-size="13.5" font-weight="800">الدول النامية وتوجيه الميزانيات</text>
+              <circle cx="180" cy="135" r="85" fill="rgba(184, 139, 74, 0.17)" stroke="#B88B4A" stroke-width="2.6"/>
+              <text x="180" y="72" text-anchor="middle" fill="#3B220B" font-family="Cairo" font-size="13.5" font-weight="800">خفض الجريمة • المشاركة المدنية</text>
+              <text x="180" y="206" text-anchor="middle" fill="#3B220B" font-family="Cairo" font-size="13.5" font-weight="800">العمل التطوعي والالتزام بالقانون</text>
+              <circle cx="180" cy="135" r="46" fill="#1A3A22"/>
+              <text x="180" y="131" text-anchor="middle" fill="#FAF5E8" font-family="Cairo" font-size="14" font-weight="900">الفرد المتعلم</text>
+              <text x="180" y="150" text-anchor="middle" fill="#D5AF72" font-family="Cairo" font-size="12" font-weight="800">دخل + ثقة</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="example-box anim d4">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">توظيف الحكومات والمنظمات الدولية لإحصاءات العائد الاجتماعي من أجل توجيه التمويل لبناء المدارس في القرى الريفية ودعم تعليم الفتيات وبرامج التدريب المهني للشباب، مما يقلل الجريمة ويعزز المشاركة المجتمعية.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 19: GREEN ECONOMY (OLD SLIDE 18 — NO VIDEO)
+           ========================================================= -->
+      <section class="slide" data-title="الموجة الثانية والاقتصاد الأخضر: نحو تنمية مستدامة" data-notes="بفضل البيانات الكمية التي وفرتها الموجة الثانية، أدرك صانعو السياسات أن النمو الذي يدمر البيئة ليس نمواً حقيقياً؛ فتوجّه الاستثمار التعليمي لدعم 'الاقتصاد الأخضر' عبر أربعة محاور متكاملة: تخريج كفاءات خضراء، وتمويل أبحاث التقنيات النظيفة، وغرس الوعي البيئي في المناهج، وتحفيز نمو يعتمد على الكفاءة لا الاستنزاف. وكيف يلتقي هذا الاقتصاد الأخضر مع اقتصاد المعرفة؟ لنشاهد الجسر الذي يربط بينهما.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ١٩</span> المحور الرابع • التحول نحو الاقتصاد الأخضر</div>
+          <h2 class="slide-title">الموجة الثانية والاقتصاد الأخضر: نحو تنمية مستدامة</h2>
+          <h3 class="slide-subtitle">انقر على أي ورقة في الزهرة الخضراء لاستكشاف المحاور الأربعة التي يجمع بها التعليم بين النمو وحماية البيئة</h3>
+        </div>
+
+        <div class="split-2 reverse">
+          <div class="visual-panel anim d2">
+            <svg viewBox="0 0 360 230" style="max-height:260px;">
+              <g class="petal-btn" onclick="selectGreen(0)">
+                <ellipse cx="180" cy="54" rx="76" ry="33" fill="#2E6B3E" stroke="#B88B4A" stroke-width="2.4"/>
+                <text x="180" y="59" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="14" font-weight="800">١. الكفاءات الخضراء</text>
+              </g>
+              <g class="petal-btn" onclick="selectGreen(1)">
+                <ellipse cx="280" cy="116" rx="74" ry="33" fill="#1A3A22" stroke="#B88B4A" stroke-width="2.4"/>
+                <text x="280" y="121" text-anchor="middle" fill="#FAF5E8" font-family="Cairo" font-size="13.5" font-weight="800">٢. البحث المستدام</text>
+              </g>
+              <g class="petal-btn" onclick="selectGreen(2)">
+                <ellipse cx="180" cy="178" rx="76" ry="33" fill="#B88B4A" stroke="#1A3A22" stroke-width="2.4"/>
+                <text x="180" y="183" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="14" font-weight="800">٣. التوعية البيئية</text>
+              </g>
+              <g class="petal-btn" onclick="selectGreen(3)">
+                <ellipse cx="80" cy="116" rx="74" ry="33" fill="#3D8A52" stroke="#B88B4A" stroke-width="2.4"/>
+                <text x="80" y="121" text-anchor="middle" fill="#fff" font-family="Cairo" font-size="13.5" font-weight="800">٤. النمو المستدام</text>
+              </g>
+              <circle cx="180" cy="116" r="36" fill="#FAF5E8" stroke="#2E6B3E" stroke-width="3.2"/>
+              <text x="180" y="112" text-anchor="middle" fill="#1A3A22" font-family="Cairo" font-size="13" font-weight="900">الاقتصاد</text>
+              <text x="180" y="130" text-anchor="middle" fill="#2E6B3E" font-family="Cairo" font-size="13" font-weight="900">الأخضر 🌿</text>
+            </svg>
+            <div class="mm-active-box" id="greenInfoBox">
+              <strong style="color:var(--emerald); font-size:15.5px;">🌿 المحور ١ — تعزيز الكفاءات الخضراء:</strong>
+              <p style="font-size:15px; font-weight:600; color:var(--ink-brown); margin-top:4px;">إنشاء تخصصات في هندسة الطاقة الشمسية وطاقة الرياح وإدارة المخلفات لتأهيل كوادر لسوق العمل الأخضر.</p>
+            </div>
+          </div>
+
+          <div class="cards-stack anim d3">
+            <div class="ed-card focusable-card" style="cursor:pointer;" onclick="selectGreen(0)">
+              <div class="ed-card-head"><span class="num-badge">١</span><h4 class="ed-card-title">تعزيز الكفاءات الخضراء</h4></div>
+              <p class="ed-card-text">تطوير برامج تعليمية لإدارة الموارد الطبيعية والطاقة المتجددة والتكنولوجيا البيئية لتأهيل كوادر سوق العمل الأخضر.</p>
+            </div>
+            <div class="ed-card focusable-card" style="cursor:pointer;" onclick="selectGreen(1)">
+              <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">دعم البحث والتطوير في التقنيات المستدامة</h4></div>
+              <p class="ed-card-text">تمويل الجامعات ومراكز الأبحاث لابتكار تقنيات نظيفة تحل المشكلات البيئية المعقدة.</p>
+            </div>
+            <div class="ed-card focusable-card" style="cursor:pointer;" onclick="selectGreen(2)">
+              <div class="ed-card-head"><span class="num-badge gold">٣</span><h4 class="ed-card-title">التوعية البيئية وتحفيز النمو المستدام</h4></div>
+              <p class="ed-card-text">إدماج مفاهيم الاستدامة بالمناهج وتحقيق نمو يعتمد على الكفاءة وإعادة التدوير بدلاً من استنزاف الموارد الطبيعية.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="example-box anim d4">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">إنشاء أقسام لهندسة الطاقة الشمسية وطاقة الرياح، وتمويل أبحاث جامعية لابتكار بدائل صديقة للبيئة للبلاستيك وتحلية المياه بالطاقة النظيفة، وتدريب المصانع على خفض الانبعاثات وترشيد الطاقة.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 20: EDUCATION AS THE BRIDGE
+           ========================================================= -->
+      <section class="slide" data-title="التعليم جسرٌ بين اقتصاد المعرفة والاقتصاد الأخضر" data-notes="إن أجمل ما نصل إليه في هذا الفصل هو التكامل لا التعارض؛ فالموجة الأولى تبني 'اقتصاد المعرفة' بالابتكار والتكنولوجيا، والموجة الثانية تبني 'الاقتصاد الأخضر' بالاستدامة والكفاءات البيئية، ويقف التعليم جسراً يربط بينهما، تماماً كما يجمع الاقتصاديون المعاصرون بين إرث النظريات التقليدية ورؤية النمو الداخلي. وفي الشريحة التالية، نجمع خيوط الفصل كله لنرى الجذور النظرية لقضايا التعليم المعاصرة.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ٢٠</span> المحور الرابع • التكامل بين الموجتين والنظريات</div>
+          <h2 class="slide-title">التعليم جسرٌ بين «اقتصاد المعرفة» و«الاقتصاد الأخضر»</h2>
+          <h3 class="slide-subtitle">التكامل التوليفي بين قوة الابتكار المعرفي ومسؤولية الاستدامة البيئية نحو مستقبل مزدهر</h3>
+        </div>
+
+        <div class="visual-panel anim d2" style="padding:12px 20px;">
+          <svg viewBox="0 0 860 165" style="max-height:190px;">
+            <rect x="595" y="42" width="245" height="104" rx="16" fill="#1A3A22"/>
+            <text x="717" y="74" text-anchor="middle" fill="#D5AF72" font-family="Cairo" font-size="14" font-weight="800">الموجة الأولى (شولتز وبيكر)</text>
+            <text x="717" y="104" text-anchor="middle" fill="#FAF5E8" font-family="Amiri" font-size="27" font-weight="700">اقتصاد المعرفة 💡</text>
+            <text x="717" y="130" text-anchor="middle" fill="#E5EFE0" font-family="Cairo" font-size="13" font-weight="700">تفكير نقدي • ابتكار • تكنولوجيا</text>
+
+            <rect x="20" y="42" width="245" height="104" rx="16" fill="#2E6B3E"/>
+            <text x="142" y="74" text-anchor="middle" fill="#D5AF72" font-family="Cairo" font-size="14" font-weight="800">الموجة الثانية (القياس الكمي)</text>
+            <text x="142" y="104" text-anchor="middle" fill="#FAF5E8" font-family="Amiri" font-size="27" font-weight="700">الاقتصاد الأخضر 🌿</text>
+            <text x="142" y="130" text-anchor="middle" fill="#E5EFE0" font-family="Cairo" font-size="13" font-weight="700">كفاءات خضراء • تقنيات مستدامة</text>
+
+            <path d="M 265 128 Q 430 16, 595 128" fill="none" stroke="#B88B4A" stroke-width="9" stroke-linecap="round"/>
+            <path d="M 265 128 Q 430 16, 595 128" fill="none" stroke="#FAF5E8" stroke-width="2.8" stroke-dasharray="11 12" class="orbit-dash"/>
+            <line x1="265" y1="80" x2="595" y2="80" stroke="#B88B4A" stroke-width="3.5"/>
+            <rect x="330" y="14" width="200" height="36" rx="18" fill="#FAF5E8" stroke="#B88B4A" stroke-width="2.5"/>
+            <text x="430" y="38" text-anchor="middle" fill="#1A3A22" font-family="Cairo" font-size="15.5" font-weight="900">التعليم: الجسر الرابط</text>
+          </svg>
+        </div>
+
+        <div class="cards-grid-2 anim d3">
+          <div class="ed-card focusable-card">
+            <div class="ed-card-head"><span class="num-badge">١</span><h4 class="ed-card-title">إسهام الموجة الأولى (المعرفة)</h4></div>
+            <p class="ed-card-text">تعزز اقتصاد المعرفة عبر التفكير النقدي والابتكار وتكنولوجيا المعلومات لرفع الإنتاجية وتوليد الأفكار الجديدة.</p>
+          </div>
+          <div class="ed-card focusable-card">
+            <div class="ed-card-head"><span class="num-badge">٢</span><h4 class="ed-card-title">إسهام الموجة الثانية (الاستدامة)</h4></div>
+            <p class="ed-card-text">تعزز الاقتصاد الأخضر بتوجيه الاستثمار التعليمي نحو الكفاءات الخضراء والتقنيات المستدامة وحماية البيئة.</p>
+          </div>
+          <div class="ed-card focusable-card">
+            <div class="ed-card-head"><span class="num-badge gold">٣</span><h4 class="ed-card-title">التعليم كجسر لمستقبل مستدام</h4></div>
+            <p class="ed-card-text">يوحّد التعليم بين طاقة الإبداع التكنولوجي ومسؤولية الحفاظ على الموارد الطبيعية للأجيال القادمة.</p>
+          </div>
+          <div class="ed-card focusable-card">
+            <div class="ed-card-head"><span class="num-badge gold">٤</span><h4 class="ed-card-title">التكامل المنهجي بين النظريات</h4></div>
+            <p class="ed-card-text">كل نظرية لاحقة طوّرت ما سبقها؛ لذا يدمج الاقتصاديون اليوم بين الأسس التقليدية للخمسينيات ونهج النمو الداخلي.</p>
+          </div>
+        </div>
+
+        <div class="example-box anim d4">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">شركة ناشئة توظف الذكاء الاصطناعي وتحليل البيانات (<strong>اقتصاد المعرفة</strong>) لتطوير شبكات كهرباء ذكية تقلل هدر الطاقة وتدمج الطاقة الشمسية (<strong>الاقتصاد الأخضر</strong>)؛ فهنا يتجسد الجسر الفعلي الذي يصنعه التعليم.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 21: CONCLUSION & 6 THEORY ROOTS
+           ========================================================= -->
+      <section class="slide" data-title="الخاتمة: الجذور النظرية والميزة التنافسية للأمم" data-notes="في ختام رحلتنا عبر الفصل الخامس، يتأكد لنا أن كل قضية تعليمية نناقشها اليوم — من جودة المناهج ومواءمة سوق العمل، إلى هجرة العقول والتمكين الإنساني والاقتصاد الأخضر — لها جذور راسخة في النظريات الاقتصادية التي استعرضناها. لقد انتقل التعليم من الهامش إلى قلب الاستراتيجيات الوطنية، وأثبتت تجارب سنغافورة وفنلندا وكوريا الجنوبية أن الاستثمار في الإنسان هو الرهان الوحيد المضمون لبناء ميزة تنافسية عالمية ومستقبل مستدام.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ٢١</span> الخاتمة التركيبية للفصل الخامس</div>
+          <h2 class="slide-title">الجذور النظرية لقضايا التعليم وبناء الميزة التنافسية</h2>
+          <h3 class="slide-subtitle">انقر على أي قضية تعليمية معاصرة لاستعراض جذرها النظري الدقيق في الفكر الاقتصادي</h3>
+        </div>
+
+        <div class="split-2">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-content:center;" class="anim d2" id="issueChips">
+            <div class="issue-chip focusable-card active" onclick="selectIssue(0)">
+              <div style="font-weight:800; font-size:17px;">١. جودة التعليم وملاءمته</div>
+              <div class="chip-sub">← ثورة الاعتماد الدولي</div>
+            </div>
+            <div class="issue-chip focusable-card" onclick="selectIssue(1)">
+              <div style="font-weight:800; font-size:17px;">٢. توزيع المعرفة والآثار غير المباشرة</div>
+              <div class="chip-sub">← نموذج نمو بول رومر</div>
+            </div>
+            <div class="issue-chip focusable-card" onclick="selectIssue(2)">
+              <div style="font-weight:800; font-size:17px;">٣. العلاقة بين التعليم وسوق العمل</div>
+              <div class="chip-sub">← فشل التنسيق ونظرية الحلقة</div>
+            </div>
+            <div class="issue-chip focusable-card" onclick="selectIssue(3)">
+              <div style="font-weight:800; font-size:17px;">٤. التنمية البشرية وأساس التعليم</div>
+              <div class="chip-sub">← نهج القدرات لأمارتيا سين</div>
+            </div>
+            <div class="issue-chip focusable-card" onclick="selectIssue(4)">
+              <div style="font-weight:800; font-size:17px;">٥. الاستثمار في رأس المال البشري</div>
+              <div class="chip-sub">← بيكر وشولتز وأرو</div>
+            </div>
+            <div class="issue-chip focusable-card" onclick="selectIssue(5)">
+              <div style="font-weight:800; font-size:17px;">٦. قضية هجرة الأدمغة</div>
+              <div class="chip-sub">← نظرية الحلقة</div>
+            </div>
+          </div>
+
+          <div class="visual-panel anim d3" style="justify-content:space-between; text-align:center; gap:14px;">
+            <div style="width:100%; background:var(--card-cream); border:2.2px solid var(--gold); border-radius:16px; padding:18px 20px;">
+              <div style="font-size:13.5px; font-weight:800; color:var(--gold);">الجذر النظري للقضية المحددة</div>
+              <h4 id="issueDetailTitle" style="font-family:var(--font-display); font-size:29px; color:var(--forest-green); margin:6px 0;">ثورة الاعتماد الدولي</h4>
+              <p id="issueDetailDesc" style="font-size:17px; font-weight:600; color:var(--ink-brown); line-height:1.65;">
+                تفسر الحاجة الملحّة لضمان جودة التعليم وملاءمة مخرجاته لاحتياجات التنمية المحلية والعالمية بدلاً من التوسع الكمي غير الموجه.
+              </p>
+            </div>
+
+            <div style="width:100%; background:var(--forest-green); color:var(--card-cream); border-radius:16px; padding:18px 20px; border:2.2px solid var(--gold);">
+              <div style="font-family:var(--font-display); font-size:25px; font-weight:700; color:var(--gold-light); margin-bottom:6px;">الخلاصة الجامعة للفصل الخامس</div>
+              <p style="font-size:16.5px; font-weight:600; line-height:1.65;">
+                تحوّل التعليم من عنصر ثانوي إلى <strong>المحرك الأساسي للتنمية الاقتصادية</strong>، والركيزة الأولى التي تبني عليها الدول ميزتها التنافسية في السوق الدولية واستراتيجياتها الوطنية.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="example-box anim d4">
+          <span class="example-tag">مثال للتوضيح</span>
+          <p class="example-text">حققت دول مثل <strong>سنغافورة وكوريا الجنوبية وفنلندا</strong> تفوقاً اقتصادياً عالمياً عبر الاستثمار المستمر في جودة التعليم والبحث العلمي رغم محدودية مواردها الطبيعية؛ كما تُعالج بطالة الخريجين وهجرة العقول بأطر <strong>فشل التنسيق</strong> و<strong>نظرية الحلقة</strong>.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 22: INTERACTIVE AUDIENCE QUIZ ARENA + ILLUSTRATION
+           ========================================================= -->
+      <section class="slide" data-title="اختبر فهمك: ساحة التفاعل مع الجمهور" data-notes="والآن نختتم عرضنا بفقرة تفاعلية سريعة لنختبر معاً أبرز المفاهيم والمعادلات التي تناولناها من النموذج المادي وحتى التنمية البشرية والموجة الثانية. لنبدأ بالسؤال الأول، وأتطلع لسماع إجاباتكم ومناقشاتكم.">
+        <div class="slide-header anim d1">
+          <div class="slide-kicker"><span class="slide-num-badge">الشريحة ٢٢</span> فقرة تفاعلية • تقييم سريع مع الجمهور</div>
+          <h2 class="slide-title">اختبر فهمك: ساحة الأسئلة التفاعلية</h2>
+          <h3 class="slide-subtitle">أربعة أسئلة منتقاة من ملفات الفريق — اختر الإجابة الصحيحة لترى التفسير الأكاديمي الفوري</h3>
+        </div>
+
+        <div class="split-2 anim d2">
+          <div style="display:flex; flex-direction:column; gap:12px; justify-content:center;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="example-tag" style="background:var(--forest-green);" id="quizCounter">السؤال ١ من ٤</span>
+              <span style="font-size:16.5px; font-weight:800; color:var(--emerald);" id="quizScore">النتيجة: ٠ / ٤</span>
+            </div>
+            <h4 id="quizQuestion" style="font-family:var(--font-display); font-size:28px; color:var(--forest-green); line-height:1.38;"></h4>
+            <div id="quizOptions" style="display:flex; flex-direction:column; gap:10px;"></div>
+          </div>
+
+          <div class="visual-panel" style="justify-content:space-between; gap:14px;">
+            <div id="quizFeedback" style="width:100%; background:var(--card-cream); border:1.8px solid rgba(184,139,74,0.55); border-radius:16px; padding:22px; text-align:center; min-height:190px; display:flex; flex-direction:column; justify-content:center;">
+              <div style="font-size:40px; margin-bottom:6px;">🎯</div>
+              <div style="font-weight:800; color:var(--forest-green); font-size:19px;">بانتظار إجابة القاعة...</div>
+              <div style="font-size:15.5px; color:var(--ink-muted); margin-top:6px;">اختر أحد البدائل على اليمين لكشف الإجابة والتعليل الأكاديمي.</div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+              <button class="int-btn" onclick="prevQuiz()">السؤال السابق</button>
+              <button class="int-btn active" onclick="nextQuiz()">السؤال التالي ←</button>
+              <button class="int-btn gold-btn" onclick="resetQuiz()">إعادة الاختبار ↺</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="media-teaser anim d3">
+          <div class="media-teaser-info">
+            <span class="media-play-badge">🖼️</span>
+            <div>
+              <div class="media-teaser-kicker">وقفة عرض مرئي • لوحة النقاش المفتوح</div>
+              <div class="media-teaser-title">لوحة العصف الذهني وتقييم الفهم (هل الإنسان مجرد آلة أم ثروة حقيقية؟)</div>
+              <div class="media-teaser-sub">لوحة ختامية ملهمة لتحفيز النقاش الجماعي المفتوح في القاعة</div>
+            </div>
+          </div>
+          <div class="media-teaser-actions">
+            <button class="media-launch-btn" onclick="openMedia('img_brainstorm')">عرض الوسائط في وضع ملء الشاشة 🎬</button>
+          </div>
+        </div>
+
+        <div class="example-box anim d4">
+          <span class="example-tag">مناقشة مفتوحة</span>
+          <p class="example-text">يسعدنا الاستماع إلى مداخلاتكم وتساؤلاتكم المفتوحة حول <strong>النمو الاقتصادي، ورأس المال البشري، والاقتصاد الأخضر</strong> قبل الانتقال لشريحة الختام.</p>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 23: GRAND THANK-YOU SLIDE (THANK-YOU MESSAGE ONLY)
+           ========================================================= -->
+      <section class="slide grand-center-slide" data-title="شكراً لكم" data-notes="شكراً جزيلاً لكم على حسن استماعكم وتفاعلكم.">
+        <div class="grand-medallion anim d1" style="padding: clamp(50px, 8vh, 96px) clamp(40px, 6vw, 110px);">
+          <div class="gold-divider anim d1" style="width:240px;"></div>
+          <h1 class="thanks-title anim d2">شكراً لكم</h1>
+          <div class="gold-divider anim d3" style="width:240px;"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="bottom-nav">
+    <div class="nav-cluster">
+      <button class="nav-arrow" id="prevBtn" onclick="changeSlide(-1)">→ السابق</button>
+      <div class="slide-counter" id="slideCounter">١ / ٢٣</div>
+      <button class="nav-arrow" id="nextBtn" onclick="changeSlide(1)">التالي ←</button>
+    </div>
+    <div class="kbd-hint" id="kbdHint">الأسهم ← → للشرائح • السهم ↓ أو Enter للتركيز التدريجي • M للوسائط • N لنص الإلقاء • G للفهرس</div>
+  </footer>
+
+  <!-- Speaker Notes Drawer (No Timer) -->
+  <aside class="notes-drawer" id="notesDrawer">
+    <div class="notes-head">
+      <span>🎙️ نص الإلقاء للمتحدث (Speaker Notes)</span>
+      <button onclick="toggleNotes()" style="background:none; border:none; color:var(--gold-light); font-weight:800; font-size:14.5px; cursor:pointer; font-family:var(--font-body);">إغلاق ✕</button>
+    </div>
+    <div class="notes-body" id="notesBody"></div>
+  </aside>
+
+  <!-- Slide Overview Grid Modal -->
+  <div class="modal-overlay" id="overviewModal">
+    <div class="modal-header">
+      <h2>فهرس شرائح العرض التقديمي (٢٣ شريحة)</h2>
+      <button class="int-btn gold-btn" onclick="toggleOverview()">إغلاق الفهرس ✕</button>
+    </div>
+    <div class="overview-grid" id="overviewGrid"></div>
+  </div>
+
+  <!-- Media Catalog Modal -->
+  <div class="modal-overlay" id="mediaCatalogModal">
+    <div class="modal-header">
+      <h2>🎬 دليل الفيديوهات والوسائط التوضيحية المدمجة</h2>
+      <button class="int-btn gold-btn" onclick="toggleMediaCatalog()">إغلاق الدليل ✕</button>
+    </div>
+    <div class="catalog-tabs" id="catalogTabs">
+      <button class="int-btn active" onclick="renderCatalog('all', this)">الكل (١٣ وسيلة)</button>
+      <button class="int-btn gold-btn" onclick="renderCatalog('video', this)">فيديوهات محلية (٦)</button>
+      <button class="int-btn gold-btn" onclick="renderCatalog('image', this)">صور ولوحات (٧)</button>
+    </div>
+    <div class="overview-grid" id="catalogGrid"></div>
+  </div>
+
+  <!-- Fullscreen Media Showcase Modal -->
+  <div class="modal-overlay" id="mediaModal">
+    <div class="modal-header">
+      <div>
+        <div id="mediaModalKicker" style="font-size:13.5px; font-weight:800; color:var(--gold-light);">عرض الوسائط بملء الشاشة</div>
+        <h2 id="mediaModalTitle">عنوان الوسيلة</h2>
+      </div>
+      <button class="int-btn gold-btn" onclick="closeMedia()">إغلاق والعودة للشريحة ✕</button>
+    </div>
+    <div class="media-stage-card">
+      <div class="media-stage-body" id="mediaStageBody"></div>
+      <div class="media-stage-caption" id="mediaStageCaption"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ============================================================
+       UNIFIED MEDIA CATALOG (LOCAL VIDEOS & ILLUSTRATIONS ONLY)
+       ============================================================ */
+    const MEDIA_CATALOG = {
+      // 6 Local MP4 Videos (No YouTube, and removed from old slides 7, 9, 12, 13, 17, 18)
+      vid_classical: {
+        type: 'video', slide: 4, title: 'نظرية الاقتصاد الكلاسيكي',
+        src: '88 - 90 نظرية الاقتصاد الكلاسيكي.mp4',
+        caption: 'ملف فيديو محلي من فريق العمل (ص 88–90) — يشرح أسس المدرسة الكلاسيكية وحدودها.'
+      },
+      vid_endogenous: {
+        type: 'video', slide: 5, title: 'نظرية النمو الداخلي',
+        src: '88 - 90 نظرية النمو الداحلي.mp4',
+        caption: 'ملف فيديو محلي من فريق العمل (ص 88–90) — يشرح كيف تنبع محركات النمو من داخل الاقتصاد.'
+      },
+      vid_savings: {
+        type: 'video', slide: 6, title: 'مفهوم الادخار ودوره في النمو',
+        src: '90 -92 الادخار.mp4',
+        caption: 'ملف فيديو محلي من فريق العمل (ص 90–92) — يشرح مفهوم الادخار في نموذج هارود–دومار.'
+      },
+      vid_hc_96: {
+        type: 'video', slide: 14, title: 'ما هو رأس المال البشري؟',
+        src: 'رأس المال البشري 96 - 98.mp4',
+        caption: 'ملف فيديو محلي من فريق العمل (ص 96–98) — يبرز أهمية الاستثمار في الإنسان والمهارات.'
+      },
+      vid_cognitive: {
+        type: 'video', slide: 15, title: 'التداخل الإدراكي ومهارات المعرفة',
+        src: 'التداخل الادراكي 96-98.mp4',
+        caption: 'ملف فيديو محلي من فريق العمل (ص 96–98) — يوضح المهارات الإدراكية في اقتصاد المعرفة.'
+      },
+      vid_pro: {
+        type: 'video', slide: 16, title: 'الفرق بين الصنايعي والمهني',
+        src: 'الفرق بين الصنايعي والمهني 98 - 100.mp4',
+        caption: 'ملف فيديو محلي من فريق العمل (ص 98–100) — يبرز أثر التأهيل المعرفي على الدخل وسوق العمل.'
+      },
+
+      // 7 Local Illustrations
+      img_edu_flow: {
+        type: 'image', slide: 1, title: 'مخطط تدفق التعليم نحو النمو الاقتصادي',
+        src: 'images/education-to-growth-flow.jpg',
+        caption: 'إنفوجرافيك يوضح مسار تحول الاستثمار التعليمي إلى مهارات وإنتاجية ونمو اقتصادي.'
+      },
+      img_ind_know: {
+        type: 'image', slide: 8, title: 'التحول من الصناعة المادية إلى المعرفة والابتكار',
+        src: 'images/industry-to-knowledge.jpg',
+        caption: 'لوحة توضيحية للتحول التاريخي من الاقتصاد المادي (المصانع) إلى اقتصاد العقول والابتكار.'
+      },
+      img_bridge_gap: {
+        type: 'image', slide: 9, title: 'ردم الفجوة بين التعليم وسوق العمل (فشل التنسيق)',
+        src: 'images/bridging-education-gap.jpg',
+        caption: 'تجسيد بصري لنهج فشل التنسيق عند ثيودور شولتز وكيفية ربط مخرجات التعليم بسوق العمل.'
+      },
+      img_lucas: {
+        type: 'image', slide: 10, title: 'مصدرا تراكم رأس المال البشري عند روبرت لوكاس',
+        src: 'images/lucas-accumulation.jpg',
+        caption: 'التكامل الدائري بين التعليم النظامي والتعلم بالممارسة وأثر العوامل الخارجية الإيجابية.'
+      },
+      img_becker: {
+        type: 'image', slide: 11, title: 'أشكال الاستثمار الثلاثة في التعليم عند غاري بيكر',
+        src: 'images/becker-investment-types.jpg',
+        caption: 'المسارات الثلاثة: التدريب أثناء العمل، التعليم المدرسي والأكاديمي، والمعرفة المجتمعية والاقتصادية.'
+      },
+      img_sen_scale: {
+        type: 'image', slide: 12, title: 'ميزان نقد رأس المال البشري مقابل التنمية البشرية (أمارتيا سين)',
+        src: 'images/sen-capabilities-scale.jpg',
+        caption: 'مقارنة بصرية بين النظرة الضيقة للإنتاج المادي ورؤية أمارتيا سين لتمكين الإنسان وصحته وحريته.'
+      },
+      img_brainstorm: {
+        type: 'image', slide: 21, title: 'لوحة العصف الذهني والنقاش المفتوح في القاعة',
+        src: 'images/brainstorm-discussion.jpg',
+        caption: 'سؤال النقاش الختامي: هل الإنسان مجرد آلة في الإنتاج أم ثروة حقيقية وغاية للتنمية؟'
+      }
+    };
+
+    /* ============================================================
+       DECK ENGINE, NAVIGATION & PROGRESSIVE FOCUS MODE
+       ============================================================ */
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    let focusMode = false;
+    let focusStep = 0;
+
+    const toArabicDigits = (n) => String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+
+    function getFocusCards(slideEl) {
+      return Array.from(slideEl.querySelectorAll('.focusable-card'));
+    }
+
+    function applyFocusState() {
+      const cards = getFocusCards(slides[currentIndex]);
+      cards.forEach((card, idx) => {
+        card.classList.remove('focus-hidden', 'focus-past', 'focus-current');
+        if (!focusMode) return;
+        if (idx < focusStep) card.classList.add('focus-past');
+        else if (idx === focusStep) card.classList.add('focus-current');
+        else card.classList.add('focus-hidden');
+      });
+    }
+
+    function advanceFocus() {
+      if (!focusMode) return false;
+      const cards = getFocusCards(slides[currentIndex]);
+      if (cards.length === 0) return false;
+      if (focusStep < cards.length - 1) {
+        focusStep++;
+        applyFocusState();
+        cards[focusStep].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return true;
+      }
+      return false;
+    }
+
+    function retreatFocus() {
+      if (!focusMode) return false;
+      if (focusStep > 0) {
+        focusStep--;
+        applyFocusState();
+        return true;
+      }
+      return false;
+    }
+
+    function toggleFocusMode() {
+      focusMode = !focusMode;
+      document.body.classList.toggle('focus-mode', focusMode);
+      document.getElementById('focusToggleBtn').classList.toggle('active', focusMode);
+      focusStep = 0;
+      applyFocusState();
+    }
+    document.getElementById('focusToggleBtn').addEventListener('click', toggleFocusMode);
+
+    // Clicking any card in Focus Mode focuses it directly
+    document.addEventListener('click', (e) => {
+      if (!focusMode) return;
+      const card = e.target.closest('.focusable-card');
+      if (!card) return;
+      const cards = getFocusCards(slides[currentIndex]);
+      const idx = cards.indexOf(card);
+      if (idx !== -1) {
+        focusStep = idx;
+        applyFocusState();
+      }
+    });
+
+    // Hall Contrast Mode
+    function toggleHallContrast() {
+      document.body.classList.toggle('hall-contrast');
+      document.getElementById('contrastToggleBtn').classList.toggle('active', document.body.classList.contains('hall-contrast'));
+    }
+    document.getElementById('contrastToggleBtn').addEventListener('click', toggleHallContrast);
+
+    function updateDeck(newIndex) {
+      if (newIndex < 0 || newIndex >= totalSlides) return;
+      const prevIndex = currentIndex;
+      slides.forEach((s, i) => {
+        s.classList.remove('active', 'exit-prev');
+        if (i === prevIndex && newIndex < prevIndex) s.classList.add('exit-prev');
+      });
+      currentIndex = newIndex;
+      slides[currentIndex].classList.add('active');
+      slides[currentIndex].scrollTop = 0;
+
+      // Reset Progressive Focus on Slide Change
+      focusStep = 0;
+      applyFocusState();
+
+      // Update Progress & Counter
+      document.getElementById('progressFill').style.width = (((currentIndex + 1) / totalSlides) * 100) + '%';
+      document.getElementById('slideCounter').textContent = `${toArabicDigits(currentIndex + 1)} / ${toArabicDigits(totalSlides)}`;
+      document.getElementById('prevBtn').disabled = currentIndex === 0;
+      document.getElementById('nextBtn').disabled = currentIndex === totalSlides - 1;
+
+      // Update Speaker Notes
+      document.getElementById('notesBody').textContent = slides[currentIndex].dataset.notes || '';
+
+      // Update Section Pills
+      const pills = document.querySelectorAll('.sec-pill');
+      pills.forEach(p => p.classList.remove('active'));
+      if (currentIndex <= 7) pills[0].classList.add('active');
+      else if (currentIndex <= 13) pills[1].classList.add('active');
+      else if (currentIndex <= 17) pills[2].classList.add('active');
+      else if (currentIndex <= 20) pills[3].classList.add('active');
+      else pills[4].classList.add('active');
+
+      // Update Overview Highlight
+      document.querySelectorAll('.ov-item').forEach((item, idx) => {
+        item.classList.toggle('current', idx === currentIndex);
+      });
+    }
+
+    function changeSlide(delta) {
+      updateDeck(currentIndex + delta);
+    }
+
+    document.querySelectorAll('.sec-pill').forEach(btn => {
+      btn.addEventListener('click', () => updateDeck(parseInt(btn.dataset.goto, 10)));
+    });
+
+    // Keyboard Controls
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      const mediaOpen = document.getElementById('mediaModal').classList.contains('open');
+      if (e.key === 'Escape') {
+        closeMedia();
+        document.getElementById('overviewModal').classList.remove('open');
+        document.getElementById('mediaCatalogModal').classList.remove('open');
+        document.getElementById('notesDrawer').classList.remove('open');
+        document.getElementById('notesToggleBtn').classList.remove('active');
+        return;
+      }
+      if (mediaOpen) return;
+
+      if (e.key === 'ArrowDown' || e.key === 'Enter') {
+        if (focusMode) {
+          e.preventDefault();
+          if (!advanceFocus()) changeSlide(1);
+        }
+      } else if (e.key === 'ArrowUp') {
+        if (focusMode) {
+          e.preventDefault();
+          retreatFocus();
+        }
+      } else if (e.key === 'ArrowLeft' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault(); changeSlide(1);
+      } else if (e.key === 'ArrowRight' || e.key === 'PageUp') {
+        e.preventDefault(); changeSlide(-1);
+      } else if (e.key === 'n' || e.key === 'N' || e.key === 'ى') {
+        toggleNotes();
+      } else if (e.key === 'g' || e.key === 'G' || e.key === 'ل') {
+        toggleOverview();
+      } else if (e.key === 'm' || e.key === 'M' || e.key === 'ة') {
+        toggleMediaCatalog();
+      } else if (e.key === 'f' || e.key === 'F' || e.key === 'ب') {
+        toggleFullscreen();
+      }
+    });
+
+    // Fixed RTL Touch Swipe: Swipe Left (diff < -60) -> Next, Swipe Right (diff > 60) -> Prev
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const diff = e.changedTouches[0].screenX - touchStartX;
+      if (diff < -60) changeSlide(1);
+      else if (diff > 60) changeSlide(-1);
+    }, { passive: true });
+
+    // Speaker Notes Drawer
+    function toggleNotes() {
+      const d = document.getElementById('notesDrawer');
+      const b = document.getElementById('notesToggleBtn');
+      d.classList.toggle('open');
+      b.classList.toggle('active', d.classList.contains('open'));
+    }
+    document.getElementById('notesToggleBtn').addEventListener('click', toggleNotes);
+
+    // Overview Grid
+    function buildOverview() {
+      const grid = document.getElementById('overviewGrid');
+      grid.innerHTML = slides.map((s, i) => `
+        <div class="ov-item ${i === 0 ? 'current' : ''}" onclick="updateDeck(${i}); toggleOverview();">
+          <div class="ov-num">الشريحة ${toArabicDigits(i + 1)}</div>
+          <div class="ov-title">${s.dataset.title}</div>
+        </div>
+      `).join('');
+    }
+    function toggleOverview() {
+      document.getElementById('overviewModal').classList.toggle('open');
+    }
+    document.getElementById('overviewToggleBtn').addEventListener('click', toggleOverview);
+
+    // Fullscreen Toggle
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+    }
+    document.getElementById('fullscreenBtn').addEventListener('click', toggleFullscreen);
+
+    /* ============================================================
+       MEDIA MODAL & MEDIA CATALOG SYSTEM
+       ============================================================ */
+    function openMedia(key) {
+      const item = MEDIA_CATALOG[key];
+      if (!item) return;
+      document.getElementById('mediaCatalogModal').classList.remove('open');
+      document.body.classList.add('media-open');
+      document.getElementById('mediaModalTitle').textContent = item.title;
+      document.getElementById('mediaStageCaption').textContent = item.caption;
+
+      const body = document.getElementById('mediaStageBody');
+      if (item.type === 'video') {
+        document.getElementById('mediaModalKicker').textContent = `▶ فيديو محلي من مجلد المشروع • مرتبط بالشريحة ${toArabicDigits(item.slide + 1)}`;
+        body.innerHTML = `<video controls autoplay playsinline src="${item.src}"></video>`;
+      } else if (item.type === 'image') {
+        document.getElementById('mediaModalKicker').textContent = `🖼️ لوحة توضيحية عالية الدقة • مرتبطة بالشريحة ${toArabicDigits(item.slide + 1)}`;
+        body.innerHTML = `<img src="${item.src}" alt="${item.title}" />`;
+      }
+      document.getElementById('mediaModal').classList.add('open');
+    }
+
+    function closeMedia() {
+      const modal = document.getElementById('mediaModal');
+      modal.classList.remove('open');
+      document.body.classList.remove('media-open');
+      const vid = modal.querySelector('video');
+      if (vid) { vid.pause(); vid.currentTime = 0; }
+      document.getElementById('mediaStageBody').innerHTML = '';
+    }
+
+    function renderCatalog(filter, btnEl) {
+      if (btnEl) {
+        document.querySelectorAll('#catalogTabs button').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+      }
+      const entries = Object.entries(MEDIA_CATALOG).filter(([_, v]) => filter === 'all' || v.type === filter);
+      const labels = { video: '▶ فيديو محلي', image: '🖼️ لوحة توضيحية' };
+      document.getElementById('catalogGrid').innerHTML = entries.map(([k, v]) => `
+        <div class="catalog-card">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span class="example-tag" style="background:${v.type === 'video' ? 'var(--emerald)' : 'var(--gold)'};">${labels[v.type]}</span>
+              <span style="font-size:12.5px; font-weight:800; color:var(--ink-muted);">الشريحة ${toArabicDigits(v.slide + 1)}</span>
+            </div>
+            <div style="font-family:var(--font-display); font-size:21px; font-weight:700; color:var(--forest-green); line-height:1.3;">${v.title}</div>
+            <div style="font-size:13.5px; font-weight:600; color:var(--ink-muted); margin-top:5px; line-height:1.5;">${v.caption}</div>
+          </div>
+          <div style="display:flex; gap:8px; margin-top:6px;">
+            <button class="media-launch-btn" style="flex:1; justify-content:center; padding:7px 12px; font-size:13px;" onclick="openMedia('${k}')">عرض الآن 🎬</button>
+            <button class="media-launch-btn secondary" style="padding:7px 12px; font-size:13px;" onclick="updateDeck(${v.slide}); toggleMediaCatalog();">للشريحة</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleMediaCatalog() {
+      const m = document.getElementById('mediaCatalogModal');
+      m.classList.toggle('open');
+      if (m.classList.contains('open')) renderCatalog('all');
+    }
+    document.getElementById('mediaCatalogBtn').addEventListener('click', toggleMediaCatalog);
+
+    /* ============================================================
+       ALL 14 INTERACTIVE WIDGETS + QUIZ ARENA
+       ============================================================ */
+    // 1. Mind Map (Slide 2)
+    const mmData = {
+      root: ['مناهج اقتصاديات التنمية', 'تنقسم الأدبيات الاقتصادية الحديثة إلى مسارين متكاملين: نظريات التنمية الاقتصادية العامة، ونظريات الترابط المتبادل بين التعليم والتنمية.'],
+      dev: ['نظريات التنمية الاقتصادية', 'تشكل الإطار التأسيسي الذي يفسر النمو والتخلف الاقتصادي، وتضم المدرسة الكلاسيكية والنماذج المعاصرة.'],
+      classic: ['النظرية الكلاسيكية', 'آدم سميث (متفائلة)، ديفيد ريكاردو وتوماس مالتوس (متشائمة)، وجون ستيوارت ميل (معتدلة).'],
+      modern: ['النماذج المعاصرة للتنمية والتخلف', 'تشمل إطار النمو الداخلي، ونموذج النمو الكلاسيكي الجديد، ونموذج هارود–دومار للاستثمار والادخار.'],
+      edu: ['نظريات الترابط المتبادل (التعليم والتنمية)', 'تضع الإنسان والتعليم في قلب العملية التنموية عبر ثلاثة مناهج رئيسية متطورة.'],
+      hc: ['نظرية رأس المال البشري', 'تعدّ التعليم والتدريب استثماراً منتجاً يضاعف كفاءة ساعات العمل والإنتاجية (شولتز، بيكر، لوكاس).'],
+      hd: ['نهج التنمية البشرية', 'يضع الإنسان كغاية للتنمية عبر توسيع حريته وقدراته ومؤشر HDI (أمارتيا سين ومحبوب الحق).'],
+      roi: ['عوائد الاستثمار في التعليم', 'تقيس العائد الاقتصادي والمجتمعي والبيئي للتعليم عبر الموجة الأولى (اقتصاد المعرفة) والثانية (مينسر والاقتصاد الأخضر).']
+    };
+    function selectMindmap(key) {
+      const [t, d] = mmData[key];
+      document.getElementById('mmInfoBox').innerHTML = `<div style="font-weight:800; color:var(--emerald); font-size:15.5px;">✦ ${t}</div><div style="font-size:15.5px; font-weight:600; color:var(--ink-brown); margin-top:4px;">${d}</div>`;
+    }
+
+    // 2. Timeline (Slide 3)
+    const decades = [
+      { badge: 'الحقبة ١: التصنيع والتحول البنيوي', title: 'الخمسينيات والستينيات: التصنيع والثنائية القطاعية', desc: 'ركزت الخمسينيات على التصنيع كقوة دافعة مقابل الزراعة (الدفعة الكبيرة، مراحل النمو الخطي)، وأسست الستينيات لنظريات التغيير البنيوي (نموذج لويس ثنائي القطاع وأنماط شينري).', metric: 'عدد المصانع والإنتاج' },
+      { badge: 'الحقبة ٢: العدالة وفرص العمل', title: 'السبعينيات: التوظيف ومستويات المعيشة', desc: 'تحول الهدف الأساسي إلى زيادة فرص العمل وتحسين مستويات المعيشة ورفاهية جميع الفئات، بمشاركة منظمة العمل الدولية والبنك الدولي واستناداً إلى ثورة الاعتماد الدولي.', metric: 'فرص العمل والرفاهية' },
+      { badge: 'الحقبة ٣: الأسواق والتنافسية', title: 'الثمانينيات: الصادرات والنمو الداخلي', desc: 'التوجه نحو الخارج وتشجيع الصادرات والتصنيع، وتعزيز دور الأسواق وتقليص دور الحكومة لرفع التنافسية؛ وظهور النظرية الكلاسيكية الجديدة ونظرية النمو الداخلي.', metric: 'الصادرات والتنافسية' },
+      { badge: 'الحقبة ٤: الاستدامة والإنسان أولاً', title: 'التسعينيات والقرن الـ٢١: التنمية المستدامة ورأس المال البشري', desc: 'عودة الدور النشط للدولة وظهور التنمية المستدامة وإطار التنمية الكامل، وتُوّج المسار بأهداف الألفية التي تضع الاستثمار في التعليم والصحة في قلب التقدم.', metric: 'جودة التعليم والصحة' }
+    ];
+    function selectDecade(i) {
+      document.querySelectorAll('#timelineTrack .tl-node').forEach((n, idx) => n.classList.toggle('active', idx === i));
+      const d = decades[i];
+      document.getElementById('tlBadge').textContent = d.badge;
+      document.getElementById('tlTitle').textContent = d.title;
+      document.getElementById('tlDesc').textContent = d.desc;
+      document.getElementById('tlMetric').textContent = d.metric;
+    }
+
+    // 3. Malthus Chart (Slide 4)
+    const foodArr = [2, 4, 6, 8, 10];
+    const popArr = [2, 4, 8, 16, 32];
+    function updateMalthus(step) {
+      step = parseInt(step, 10);
+      document.getElementById('malthusStepLbl').textContent = `الجيل: ${toArabicDigits(step)}`;
+      const xStart = 60, xStep = 72, yBase = 166, yScale = 4.4;
+      let fPts = [], pPts = [], dotsHtml = '';
+      for (let i = 0; i < step; i++) {
+        const x = xStart + i * xStep;
+        const fy = yBase - foodArr[i] * yScale;
+        const py = yBase - popArr[i] * yScale;
+        fPts.push(`${x},${fy}`);
+        pPts.push(`${x},${py}`);
+        dotsHtml += `<circle cx="${x}" cy="${fy}" r="5.5" fill="#2E6B3E"/><circle cx="${x}" cy="${py}" r="5.5" fill="#3B220B"/>`;
+      }
+      document.getElementById('foodLine').setAttribute('points', fPts.join(' '));
+      document.getElementById('popLine').setAttribute('points', pPts.join(' '));
+      document.getElementById('malthusGap').setAttribute('points', [...pPts, ...fPts.slice().reverse()].join(' '));
+      document.getElementById('malthusDots').innerHTML = dotsHtml;
+      document.getElementById('popVal').textContent = popArr[step - 1];
+      document.getElementById('foodVal').textContent = foodArr[step - 1];
+      document.getElementById('gapVal').textContent = popArr[step - 1] - foodArr[step - 1];
+    }
+
+    // 4. Neoclassical Tech Curve (Slide 5)
+    function toggleNeoTech(withTech) {
+      document.getElementById('neoBtnPlain').classList.toggle('active', !withTech);
+      document.getElementById('neoBtnTech').classList.toggle('active', withTech);
+      document.getElementById('neoTechCurve').style.strokeDashoffset = withTech ? '0' : '410';
+      document.getElementById('neoTechLabel').style.opacity = withTech ? '1' : '0';
+      document.getElementById('neoCaption').textContent = withTech
+        ? '✦ بإدخال التقدم التكنولوجي والابتكار، يتجاوز الاقتصاد قانون تناقص العائد ويحقق نمواً مستداماً!'
+        : 'إضافة الآلات المتماثلة ترفع الإنتاج بدايةً ثم تتباطأ الزيادة الإضافية تدريجياً.';
+    }
+
+    // 5. Harrod-Domar Calculator (Slide 6)
+    function calcHD() {
+      const r = parseFloat(document.getElementById('hdRatio').value);
+      const g = parseFloat(document.getElementById('hdGrowth').value);
+      const res = +(r * g).toFixed(1);
+      document.getElementById('hdRatioVal').textContent = `${r} : 1`;
+      document.getElementById('hdGrowthVal').textContent = `${g}%`;
+      document.getElementById('hdResult').textContent = `${res}%`;
+    }
+    function resetHD() {
+      document.getElementById('hdRatio').value = 4;
+      document.getElementById('hdGrowth').value = 5;
+      calcHD();
+    }
+
+    // 6. Balanced Growth Gears (Slide 7)
+    function setGearMode(balanced) {
+      document.getElementById('gearBalancedBtn').classList.toggle('active', balanced);
+      document.getElementById('gearJamBtn').classList.toggle('active', !balanced);
+      ['gear1', 'gear2', 'gear3'].forEach(id => document.getElementById(id).classList.toggle('gear-jammed', !balanced));
+      const st = document.getElementById('gearStatus');
+      if (balanced) {
+        st.style.color = 'var(--emerald)';
+        st.textContent = '✓ جميع القطاعات تنمو بتناغم واستيعاب استثماري دون تضخم.';
+      } else {
+        st.style.color = '#9B2C1D';
+        st.textContent = '⚠ تحذير: اختناق قطاعي وتعطل الإنتاج وارتفاع حاد في التضخم بسبب غياب التوازن!';
+      }
+    }
+
+    // 7. Physical vs Human Capital Morph (Slide 8)
+    function toggleHCMorph(isHuman) {
+      document.getElementById('hcOldBtn').classList.toggle('active', !isHuman);
+      document.getElementById('hcNewBtn').classList.toggle('active', isHuman);
+      const card = document.getElementById('hcMorphCard');
+      if (isHuman) {
+        card.style.borderColor = 'var(--emerald)';
+        document.getElementById('hcIcon').textContent = '🧠✨';
+        document.getElementById('hcMorphTitle').textContent = 'رأس المال البشري: ثروة متجددة';
+        document.getElementById('hcMorphDesc').textContent = 'تنمية المعارف والمهارات والقدرات الذهنية والصحية — يولّد الابتكار، ويعيد بناء البنية المادية من الصفر، ويضمن استدامة النمو.';
+      } else {
+        card.style.borderColor = 'var(--gold)';
+        document.getElementById('hcIcon').textContent = '🏭⚙️';
+        document.getElementById('hcMorphTitle').textContent = 'رأس المال المادي: نظرة تقليدية محدودة';
+        document.getElementById('hcMorphDesc').textContent = 'تكديس المصانع والآلات والمعدات والأصول المالية — تتعرض للتقادم والعوائد المتناقصة وتحتاج دوماً لإنسان مؤهل يديرها.';
+      }
+    }
+
+    // 8. Schultz Bridge (Slide 9)
+    let bridgeJoined = false;
+    function toggleBridge() {
+      bridgeJoined = !bridgeJoined;
+      document.getElementById('bridgeSvg').classList.toggle('bridge-joined', bridgeJoined);
+      document.getElementById('bridgeWarn').style.opacity = bridgeJoined ? '0' : '1';
+      document.getElementById('bridgeOkText').style.opacity = bridgeJoined ? '1' : '0';
+      const btn = document.getElementById('bridgeToggleBtn');
+      btn.classList.toggle('active', bridgeJoined);
+      btn.textContent = bridgeJoined ? '↺ إظهار حالة فشل التنسيق' : '⚡ ردم الفجوة وتفعيل التنسيق';
+    }
+
+    // 9. Sen Scale (Slide 12)
+    function tiltSenScale(deg) {
+      document.getElementById('senScaleBeam').style.transform = `rotate(${deg}deg)`;
+    }
+
+    // 10. HDI Triangle (Slide 13)
+    const hdiDetails = {
+      edu: ['البعد المعرفي / التعليمي (متساوي الوزن):', 'يُقاس بمتوسط سنوات الدراسة للبالغين (25+ سنة) وسنوات الدراسة المتوقعة للأطفال عند دخول المدرسة، وهو المفتاح الذهبي لرفع الصحة والدخل.'],
+      health: ['البعد الصحي (حياة مديدة وصحية):', 'يُقاس بمتوسط العمر المتوقع عند الولادة؛ ويرفعه التعليم عبر الوعي الصحي والغذائي والوقاية من الأمراض وخفض وفيات الأطفال.'],
+      income: ['البعد الاقتصادي (مستوى معيشي لائق):', 'يُقاس بنصيب الفرد من الدخل القومي الإجمالي (GNI)؛ ويدفعه التعليم عبر رفع المهارات والإنتاجية وفتح فرص عمل أفضل.']
+    };
+    function selectHDI(key) {
+      const [h, p] = hdiDetails[key];
+      document.getElementById('hdiInfoBox').innerHTML = `<strong style="color:var(--emerald); font-size:15.5px;">${h}</strong><p style="font-size:15px; font-weight:600; color:var(--ink-brown); margin-top:4px;">${p}</p>`;
+    }
+
+    // 11. Mincer Chart (Slide 16)
+    const mincerStages = [
+      { x: 100, y: 135, inc: 'أساسي محدود', stab: 'عرضة للتقلبات' },
+      { x: 210, y: 99, inc: 'مرتفع (+ تنافسية)', stab: 'استقرار قوي' },
+      { x: 322, y: 38, inc: 'عائد قياسي أعلى', stab: 'استقرار وقيادة' }
+    ];
+    function selectMincer(idx) {
+      [0, 1, 2].forEach(i => document.getElementById('mStage' + i).classList.toggle('active', i === idx));
+      const s = mincerStages[idx];
+      document.getElementById('mincerMarker').style.transform = `translate(${s.x}px, ${s.y}px)`;
+      document.getElementById('mincerInc').textContent = s.inc;
+      document.getElementById('mincerStab').textContent = s.stab;
+    }
+
+    // 12. Green Economy Mandala (Slide 18)
+    const greenDetails = [
+      ['🌿 المحور ١ — تعزيز الكفاءات الخضراء:', 'تطوير برامج تعليمية في إدارة الموارد الطبيعية والطاقة المتجددة (الشمس والرياح) وإدارة المخلفات لتأهيل كوادر سوق العمل الأخضر.'],
+      ['🔬 المحور ٢ — البحث والتطوير المستدام:', 'تمويل الجامعات ومراكز الأبحاث لابتكار بدائل صديقة للبيئة للبلاستيك وتحلية المياه بالطاقة النظيفة وحل المشكلات البيئية المعقدة.'],
+      ['🌱 المحور ٣ — التوعية والتعليم البيئي:', 'إدماج قضايا التغير المناخي وترشيد الطاقة والاستدامة في المناهج المدرسية والجامعية لبناء جيل واعٍ ومسؤول.'],
+      ['♻️ المحور ٤ — تحفيز النمو الاقتصادي المستدام:', 'تحقيق نمو يرتكز على الكفاءة الإنتاجية وإعادة التدوير بدلاً من استنزاف الموارد الطبيعية، صوناً لحقوق الأجيال القادمة.']
+    ];
+    function selectGreen(idx) {
+      const [t, d] = greenDetails[idx];
+      document.getElementById('greenInfoBox').innerHTML = `<strong style="color:var(--emerald); font-size:15.5px;">${t}</strong><p style="font-size:15px; font-weight:600; color:var(--ink-brown); margin-top:4px;">${d}</p>`;
+    }
+
+    // 13. 6 Theory Roots (Slide 20)
+    const issuesData = [
+      ['ثورة الاعتماد الدولي', 'تفسر الحاجة الملحّة لضمان جودة التعليم وملاءمة مخرجاته لاحتياجات التنمية المحلية والعالمية بدلاً من التوسع الكمي غير الموجه.'],
+      ['نموذج نمو بول رومر (Romer)', 'يفسر التأثيرات غير المباشرة الإيجابية وتوزيع المعرفة، وكيف يخلق الاقتصاد القائم على المعرفة منتجات جديدة بسرعة وكفاءة.'],
+      ['نهج فشل التنسيق ونظرية الحلقة', 'يفسران الاختلال بين مخرجات التعليم واحتياجات سوق العمل، ويقدمان حلولاً لمواءمة المهارات ومعالجة بطالة المتعلمين.'],
+      ['نهج القدرات لأمارتيا سين (Sen)', 'يؤسس للرؤية الإنسانية للتعليم بوصفه أداة تمكين وتوسيع للخيارات والحرية، وليس مجرد وسيلة لزيادة الإنتاج المادي.'],
+      ['أعمال بيكر وشولتز وأرو', 'تضع الأساس العلمي للاستثمار في رأس المال البشري كمحرك للإنتاجية والنمو طويل الأمد وتفسير الفجوات التنموية.'],
+      ['نظرية الحلقة (Ring Theory)', 'تفسر ظاهرة هجرة الأدمغة والكفاءات المتعلمة من الدول النامية وتأثيرها الهيكلي على مسارات التنمية الوطنية.']
+    ];
+    function selectIssue(idx) {
+      document.querySelectorAll('#issueChips .issue-chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+      document.getElementById('issueDetailTitle').textContent = issuesData[idx][0];
+      document.getElementById('issueDetailDesc').textContent = issuesData[idx][1];
+    }
+
+    // 14. Audience Quiz Arena (Slide 21)
+    const quizData = [
+      {
+        q: 'إذا كانت نسبة رأس المال إلى الناتج في دولة ما (3 : 1)، وأرادت زيادة ناتجها القومي بنسبة (4%)، فكم يجب أن تزيد مخزون رأسمالها وفق نموذج هارود–دومار؟',
+        opts: ['أ) 7%', 'ب) 12%', 'ج) 1.3%'],
+        ans: 1,
+        exp: 'الإجابة الصحيحة (ب) 12% — وفق معادلة هارود–دومار: نسبة رأس المال إلى الناتج (3) × النمو المستهدف (4%) = 12%.'
+      },
+      {
+        q: 'وفقاً لتحليل العالم الاقتصادي ثيودور شولتز، تحدث البطالة وإهدار رأس المال البشري أساساً نتيجة:',
+        opts: ['أ) قلة عدد المدارس والجامعات فقط.', 'ب) فشل التنسيق بين سياسة التعليم واحتياجات سوق العمل.', 'ج) ارتفاع مستوى الأجور في القطاع الخاص.'],
+        ans: 1,
+        exp: 'الإجابة الصحيحة (ب) — يرى شولتز أن البطالة لا تعني عدم جدوى التعليم، بل تنشأ عن غياب التكامل بين مخرجاته وسوق العمل.'
+      },
+      {
+        q: 'وفق رؤية أمارتيا سين ومؤشر التنمية البشرية (HDI)، أي العبارات التالية هي الأدق؟',
+        opts: ['أ) الدخل القومي هو الهدف النهائي للتنمية البشرية.', 'ب) التعليم يُقاس في المؤشر بعدد المباني المدرسية فقط.', 'ج) التعليم محور أساسي لتوسيع قدرات الإنسان ويرتبط طردياً بتحسن الصحة والدخل.'],
+        ans: 2,
+        exp: 'الإجابة الصحيحة (ج) — المال وسيلة لا غاية، والتعليم هو المحرك الخفي لرفع الصحة والدخل وتوسيع حرية الإنسان وقدراته.'
+      },
+      {
+        q: 'ما الفارق الجوهري الذي أحدثته الموجة الثانية (يعقوب مينسر) مقارنة بالموجة الأولى؟',
+        opts: ['أ) الانتقال من المفاهيم النظرية إلى القياس الكمي والإحصائي الدقيق لعوائد التعليم.', 'ب) إلغاء دور التعليم النظامي والاكتفاء بالتدريب اليدوي.', 'ج) اقتصار التحليل على الدول الصناعية الكبرى فقط.'],
+        ans: 0,
+        exp: 'الإجابة الصحيحة (أ) — أدخل مينسر في أوائل السبعينيات الأدوات الإحصائية ونموذج الأرباح وامتد القياس للعوائد الاجتماعية والاقتصاد الأخضر.'
+      }
+    ];
+    let qIdx = 0;
+    let qAnswered = [null, null, null, null];
+
+    function renderQuiz() {
+      const q = quizData[qIdx];
+      const score = qAnswered.filter((a, i) => a === quizData[i].ans).length;
+      document.getElementById('quizCounter').textContent = `السؤال ${toArabicDigits(qIdx + 1)} من ${toArabicDigits(quizData.length)}`;
+      document.getElementById('quizScore').textContent = `النتيجة: ${toArabicDigits(score)} / ${toArabicDigits(quizData.length)}`;
+      document.getElementById('quizQuestion').textContent = q.q;
+
+      document.getElementById('quizOptions').innerHTML = q.opts.map((opt, i) => {
+        let cls = 'quiz-opt';
+        if (qAnswered[qIdx] !== null) {
+          if (i === q.ans) cls += ' correct';
+          else if (i === qAnswered[qIdx]) cls += ' wrong';
+        }
+        return `<button class="${cls}" ${qAnswered[qIdx] !== null ? 'disabled' : ''} onclick="answerQuiz(${i})">${opt}</button>`;
+      }).join('');
+
+      const fb = document.getElementById('quizFeedback');
+      if (qAnswered[qIdx] === null) {
+        fb.innerHTML = `<div style="font-size:40px; margin-bottom:6px;">🎯</div><div style="font-weight:800; color:var(--forest-green); font-size:19px;">بانتظار إجابة القاعة...</div><div style="font-size:15.5px; color:var(--ink-muted); margin-top:6px;">اختر أحد البدائل على اليمين لكشف الإجابة والتعليل الأكاديمي.</div>`;
+      } else {
+        const isRight = qAnswered[qIdx] === q.ans;
+        fb.innerHTML = `<div style="font-size:42px; margin-bottom:6px;">${isRight ? '✅' : '💡'}</div><div style="font-weight:800; color:${isRight ? 'var(--emerald)' : '#9B2C1D'}; font-size:19px; margin-bottom:6px;">${isRight ? 'إجابة صحيحة وموفقة!' : 'محاولة جيدة — راجع التعليل:'}</div><div style="font-size:16.5px; font-weight:700; color:var(--ink-brown); line-height:1.65;">${q.exp}</div>`;
+      }
+    }
+    function answerQuiz(i) { qAnswered[qIdx] = i; renderQuiz(); }
+    function nextQuiz() { qIdx = (qIdx + 1) % quizData.length; renderQuiz(); }
+    function prevQuiz() { qIdx = (qIdx - 1 + quizData.length) % quizData.length; renderQuiz(); }
+    function resetQuiz() { qAnswered = [null, null, null, null]; qIdx = 0; renderQuiz(); }
+
+    /* ============================================================
+       INITIALIZE ALL WIDGETS
+       ============================================================ */
+    buildOverview();
+    updateMalthus(5);
+    calcHD();
+    renderQuiz();
+    updateDeck(0);
+  </script>
+</body>
+</html>
